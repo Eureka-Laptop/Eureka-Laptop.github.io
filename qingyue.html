@@ -317,6 +317,8 @@ mark.anno-highlight:hover .anno-tooltip{opacity:1;pointer-events:auto}
   <span>© 2026 Dylan Zhu</span>
 </footer>
 
+<script src="https://cdn.jsdelivr.net/npm/firebase@10.12.0/firebase-app-compat.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/firebase@10.12.0/firebase-database-compat.js"></script>
 <script>
 // Progress bar
 var pTrack=document.getElementById("progressTrack"),pFill=document.getElementById("progressFill"),pDot=document.getElementById("progressDot"),pChaps=document.getElementById("progressChapters");
@@ -348,8 +350,27 @@ var io=new IntersectionObserver(function(entries){entries.forEach(function(e){if
 document.querySelectorAll(".reveal").forEach(function(el){io.observe(el)});
 
 // === ANNOTATION SYSTEM ===
+// Firebase init
+firebase.initializeApp({
+  apiKey:"AIzaSyC_EuqTmWBbz7HGDxo7OVT1UQ4a7AEdVrI",
+  authDomain:"dylanzhu-site.firebaseapp.com",
+  databaseURL:"https://dylanzhu-site-default-rtdb.firebaseio.com",
+  projectId:"dylanzhu-site",
+  storageBucket:"dylanzhu-site.firebasestorage.app",
+  messagingSenderId:"29557550235",
+  appId:"1:29557550235:web:ccf778b1ea7f32a267ea3e"
+});
+var db=firebase.database();
+var annosRef=db.ref("annotations");
 var annos=[];
-try{annos=JSON.parse(localStorage.getItem("qy_annos"))||[]}catch(e){annos=[]}
+
+// Load annotations from Firebase and listen for changes
+annosRef.on("value",function(snap){
+  annos=[];
+  var data=snap.val();
+  if(data){Object.keys(data).forEach(function(k){var a=data[k];a.id=k;annos.push(a)})}
+  renderAnnoSidebar();
+})
 var selRange=null;
 
 document.addEventListener("mouseup",function(e){
@@ -375,9 +396,9 @@ document.getElementById("hlBtn").addEventListener("click",function(){
   if(!selRange)return;
   try{var mark=document.createElement("mark");mark.className="hl-only";selRange.surroundContents(mark);
   var q=mark.textContent.substring(0,200);
-  annos.push({id:Date.now(),quote:q,comment:"",author:localStorage.getItem("user_name")||"",articleId:"",date:new Date().toLocaleDateString("zh-CN"),type:"highlight",replies:[]});
-  localStorage.setItem("qy_annos",JSON.stringify(annos));
-  mark.setAttribute("data-anno-id",annos[annos.length-1].id);
+  var newAnno={quote:q,comment:"",author:localStorage.getItem("user_name")||"",articleId:"",date:new Date().toLocaleDateString("zh-CN"),type:"highlight",replies:[]};
+  var newRef=annosRef.push(newAnno);
+  mark.setAttribute("data-anno-id",newRef.key);
   mark.addEventListener("click",function(){showFloatAt(mark)});
   }catch(e){}
   selRange=null;window.getSelection().removeAllRanges();renderAnnoSidebar();
@@ -420,16 +441,16 @@ document.getElementById("annoSaveBtn").addEventListener("click",function(){
   var existingMark=selRange.startContainer;
   while(existingMark&&existingMark.tagName!=="MARK")existingMark=existingMark.parentNode;
   if(existingMark&&existingMark.tagName==="MARK"){
-    var eid=parseInt(existingMark.getAttribute("data-anno-id"));
+    var eid=existingMark.getAttribute("data-anno-id");
     var existing=annos.find(function(a){return a.id===eid});
     if(existing){existing.comment=existing.comment?(existing.comment+"\n---\n"+userName+": "+comment):(userName+": "+comment);
-    localStorage.setItem("qy_annos",JSON.stringify(annos));
+    annosRef.child(eid).update({comment:existing.comment});
     existingMark.className="anno-highlight";rebuildTooltip(existingMark,existing);}
   }else{
-    annos.push({id:Date.now(),quote:quote.substring(0,200),comment:comment,author:userName,articleId:articleEl?articleEl.id:"",date:new Date().toLocaleDateString("zh-CN"),type:"annotation",replies:[]});
-    localStorage.setItem("qy_annos",JSON.stringify(annos));
+    var newAnno={quote:quote.substring(0,200),comment:comment,author:userName,articleId:articleEl?articleEl.id:"",date:new Date().toLocaleDateString("zh-CN"),type:"annotation",replies:[]};
+    var newRef=annosRef.push(newAnno);
     try{var mark=document.createElement("mark");mark.className="anno-highlight";
-    mark.setAttribute("data-anno-id",annos[annos.length-1].id);
+    mark.setAttribute("data-anno-id",newRef.key);
     selRange.surroundContents(mark);
     rebuildTooltip(mark,annos[annos.length-1]);
     mark.addEventListener("click",function(){showFloatAt(mark)});
@@ -457,7 +478,7 @@ function rebuildTooltip(mark,anno){
       var txt=ri.querySelector("input").value.trim();if(!txt)return;
       if(!anno.replies)anno.replies=[];
       anno.replies.push({author:localStorage.getItem("user_name"),text:txt});
-      localStorage.setItem("qy_annos",JSON.stringify(annos));
+      annosRef.child(anno.id).update({replies:anno.replies});
       rebuildTooltip(mark,anno);renderAnnoSidebar();
     });
   });
@@ -482,9 +503,9 @@ function renderAnnoSidebar(){
   });
   list.querySelectorAll(".del-anno").forEach(function(btn){
     btn.addEventListener("click",function(){
-      var id=parseInt(this.getAttribute("data-id"));
+      var id=this.getAttribute("data-id");
+      annosRef.child(id).remove();
       annos=annos.filter(function(a){return a.id!==id});
-      localStorage.setItem("qy_annos",JSON.stringify(annos));
       var mark=document.querySelector('mark[data-anno-id="'+id+'"]');
       if(mark){var p=mark.parentNode;while(mark.firstChild){if(mark.firstChild.className!=="anno-tooltip")p.insertBefore(mark.firstChild,mark);else mark.removeChild(mark.firstChild)}p.removeChild(mark)}
       renderAnnoSidebar();
@@ -514,9 +535,9 @@ function renderAnnoSidebar(){
   });
   list.querySelectorAll(".del-anno").forEach(function(btn){
     btn.addEventListener("click",function(){
-      var id=parseInt(this.getAttribute("data-id"));
+      var id=this.getAttribute("data-id");
+      annosRef.child(id).remove();
       annos=annos.filter(function(a){return a.id!==id});
-      localStorage.setItem("qy_annos",JSON.stringify(annos));
       var mark=document.querySelector('mark[data-anno-id="'+id+'"]');
       if(mark){var parent=mark.parentNode;while(mark.firstChild){parent.insertBefore(mark.firstChild,mark)}parent.removeChild(mark)}
       renderAnnoSidebar();
