@@ -70,6 +70,45 @@ footer{padding:2rem var(--gutter);border-top:1px solid var(--line);font-size:.75
 @keyframes fadeUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
 
 @media(max-width:768px){.toc-list a{grid-template-columns:1fr;gap:.3rem}.toc-list .toc-date{order:-1}}
+
+/* ANNOTATIONS */
+.anno-popup{position:absolute;z-index:150;background:var(--ink);color:var(--cream);border-radius:8px;padding:.5rem .75rem;font-family:var(--sans);font-size:.75rem;display:none;box-shadow:0 4px 16px color-mix(in srgb,var(--ink) 30%,transparent);animation:popIn .2s ease}
+.anno-popup.show{display:flex;align-items:center;gap:.5rem}
+.anno-popup button{background:var(--terracotta);color:var(--cream);border:none;border-radius:100px;padding:.3rem .7rem;font-size:.7rem;cursor:pointer;font-family:var(--sans);letter-spacing:.04em;white-space:nowrap;transition:opacity .2s}
+.anno-popup button:hover{opacity:.85}
+@keyframes popIn{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
+.anno-modal-overlay{position:fixed;inset:0;background:color-mix(in srgb,var(--ink) 40%,transparent);z-index:200;display:none;align-items:center;justify-content:center;backdrop-filter:blur(6px)}
+.anno-modal-overlay.show{display:flex}
+.anno-modal{background:var(--cream);border-radius:12px;padding:2rem;max-width:420px;width:90%;box-shadow:0 20px 60px color-mix(in srgb,var(--ink) 15%,transparent);animation:popIn .3s ease}
+.anno-modal h4{font-family:var(--serif);font-size:1.1rem;font-weight:400;margin-bottom:.3rem}
+.anno-modal .anno-quote{font-family:var(--cn);font-size:.85rem;color:var(--ink-soft);border-left:3px solid var(--terracotta);padding:.5rem .75rem;margin:.75rem 0;background:var(--cream-dark);border-radius:0 4px 4px 0;line-height:1.5;max-height:80px;overflow:hidden}
+.anno-modal textarea{width:100%;height:80px;border:1px solid var(--line);border-radius:6px;background:var(--cream-dark);font-family:var(--sans);font-size:.85rem;color:var(--ink);padding:.6rem;resize:vertical;outline:none;margin:.75rem 0}
+.anno-modal textarea:focus{border-color:var(--terracotta)}
+.anno-modal .anno-btns{display:flex;gap:.5rem;justify-content:flex-end}
+.anno-modal .anno-btns button{padding:.5rem 1rem;border-radius:100px;font-family:var(--sans);font-size:.8rem;cursor:pointer;transition:all .2s}
+.anno-modal .anno-cancel{border:1px solid var(--line);background:transparent;color:var(--ink-soft)}
+.anno-modal .anno-cancel:hover{border-color:var(--ink-soft)}
+.anno-modal .anno-save{border:none;background:var(--ink);color:var(--cream)}
+.anno-modal .anno-save:hover{background:var(--terracotta)}
+mark.anno-highlight{background:color-mix(in srgb,var(--ochre) 25%,transparent);border-bottom:2px solid var(--ochre);cursor:pointer;padding:0 1px;border-radius:2px;position:relative}
+.anno-tooltip{position:absolute;bottom:calc(100% + 8px);left:50%;transform:translateX(-50%);background:var(--ink);color:var(--cream);padding:.6rem .8rem;border-radius:6px;font-family:var(--sans);font-size:.75rem;line-height:1.4;max-width:260px;white-space:normal;z-index:50;pointer-events:none;opacity:0;transition:opacity .2s;box-shadow:0 4px 12px color-mix(in srgb,var(--ink) 20%,transparent)}
+.anno-tooltip::after{content:"";position:absolute;top:100%;left:50%;transform:translateX(-50%);border:5px solid transparent;border-top-color:var(--ink)}
+mark.anno-highlight:hover .anno-tooltip{opacity:1}
+.anno-tooltip .anno-author{color:var(--terracotta);font-weight:600;margin-bottom:.2rem;display:block;font-size:.65rem;letter-spacing:.06em}
+.anno-sidebar{position:fixed;right:0;top:0;bottom:0;width:320px;background:var(--cream);border-left:1px solid var(--line);z-index:160;transform:translateX(100%);transition:transform .3s ease;overflow-y:auto;padding:2rem 1.5rem}
+.anno-sidebar.open{transform:none}
+.anno-sidebar h3{font-family:var(--serif);font-size:1.1rem;font-weight:400;margin-bottom:1.5rem;display:flex;justify-content:space-between;align-items:center}
+.anno-sidebar .close-sidebar{background:none;border:none;font-size:1.2rem;cursor:pointer;color:var(--ink-soft);padding:.25rem}
+.anno-list{list-style:none}
+.anno-list li{padding:.75rem 0;border-bottom:1px solid var(--line);font-size:.8rem}
+.anno-list .aq{font-family:var(--cn);color:var(--ink-soft);font-size:.75rem;margin-bottom:.3rem;font-style:italic}
+.anno-list .ac{color:var(--ink);line-height:1.4}
+.anno-list .am{display:flex;justify-content:space-between;margin-top:.4rem;font-size:.65rem;color:var(--ink-soft)}
+.anno-list .del-anno{background:none;border:none;color:var(--plum);cursor:pointer;font-size:.65rem}
+.anno-list .del-anno:hover{text-decoration:underline}
+.anno-toggle{position:fixed;right:1.5rem;bottom:2rem;width:44px;height:44px;border-radius:50%;background:var(--ink);color:var(--cream);border:none;cursor:pointer;z-index:155;display:none;align-items:center;justify-content:center;box-shadow:0 4px 12px color-mix(in srgb,var(--ink) 20%,transparent);transition:background .2s;font-size:1rem}
+.anno-toggle.has-annos{display:flex}
+.anno-toggle:hover{background:var(--terracotta)}
 </style>
 </head>
 <body>
@@ -78,7 +117,6 @@ footer{padding:2rem var(--gutter);border-top:1px solid var(--line);font-size:.75
 <nav>
   <a href="index.html" class="mark">dylanzhu<em>.</em>com</a>
   <a href="index.html#research" class="back"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M10 3L5 8l5 5"/></svg><span data-i18n="back_projects">返回项目</span></a>
-  </a>
   <div class="nav-user" id="navUser"></div>
 </nav>
 
@@ -252,17 +290,167 @@ footer{padding:2rem var(--gutter);border-top:1px solid var(--line);font-size:.75
   <a href="#" class="back-top" onclick="window.scrollTo({top:0});return false;">↑ 返回目录顶部</a>
 </article>
 
+<!-- Annotation UI -->
+<div class="anno-popup" id="annoPopup"><button id="annoBtn">+ 批注</button></div>
+<div class="anno-modal-overlay" id="annoOverlay">
+  <div class="anno-modal">
+    <h4>添加批注</h4>
+    <div class="anno-quote" id="annoQuote"></div>
+    <textarea id="annoText" placeholder="写下你的想法..."></textarea>
+    <div class="anno-btns">
+      <button class="anno-cancel" id="annoCancelBtn">取消</button>
+      <button class="anno-save" id="annoSaveBtn">保存</button>
+    </div>
+  </div>
+</div>
+<button class="anno-toggle" id="annoToggle" title="查看批注">📝</button>
+<div class="anno-sidebar" id="annoSidebar">
+  <h3>批注 <button class="close-sidebar" id="closeSidebar">&times;</button></h3>
+  <ul class="anno-list" id="annoList"></ul>
+</div>
+
 <footer>
   <span>© 2026 Dylan Zhu</span>
 </footer>
 
 <script>
-const pTrack=document.getElementById("progressTrack"),pFill=document.getElementById("progressFill"),pDot=document.getElementById("progressDot"),pPct=document.getElementById("progressPct"),pChaps=document.getElementById("progressChapters");function initCh(){pChaps.innerHTML="";var d=document.documentElement.scrollHeight-document.documentElement.clientHeight;if(d<=0)return;document.querySelectorAll("article.article").forEach(function(a){var p=(a.offsetTop/d)*100;var m=document.createElement("span");m.style.top=p+"%";pChaps.appendChild(m)})}setTimeout(initCh,500);window.addEventListener("resize",initCh);window.addEventListener("scroll",function(){var h=document.documentElement;var d=h.scrollHeight-h.clientHeight;var p=d>0?(h.scrollTop/d)*100:0;var cl=Math.min(100,Math.max(0,p));pFill.style.height=cl+"%";pDot.style.bottom=cl+"%";pPct.style.bottom=cl+"%";pPct.textContent=Math.round(cl)+"%";pTrack.classList.toggle("visible",h.scrollTop>200)});
-try{var su=JSON.parse(localStorage.getItem("siteUser"));if(su&&su.name){var nu=document.getElementById("navUser");var av=su.avatar?"<img src=""+su.avatar+"" alt="">": su.name.charAt(0).toUpperCase();nu.innerHTML="<span class="nav-user-avatar">"+av+"</span><span class="nav-user-name">"+su.name+"</span>"}}catch(e){}
-const QT={"zh-CN":{back_projects:"返回项目",qy_badge:"长期项目 · 2025.09 –",qy_toc:"目录"},"zh-TW":{back_projects:"返回項目",qy_badge:"長期項目 · 2025.09 –",qy_toc:"目錄"},en:{back_projects:"Back to Projects",qy_badge:"Long-term · 2025.09 –",qy_toc:"Contents"},de:{back_projects:"Zurück zu Projekte",qy_badge:"Langfristig · 2025.09 –",qy_toc:"Inhaltsverzeichnis"},fr:{back_projects:"Retour aux Projets",qy_badge:"Long terme · 2025.09 –",qy_toc:"Sommaire"},ja:{back_projects:"プロジェクトに戻る",qy_badge:"長期 · 2025.09 –",qy_toc:"目次"}};
+// Progress bar
+var pTrack=document.getElementById("progressTrack"),pFill=document.getElementById("progressFill"),pDot=document.getElementById("progressDot"),pChaps=document.getElementById("progressChapters");
+function initCh(){pChaps.innerHTML="";var d=document.documentElement.scrollHeight-document.documentElement.clientHeight;if(d<=0)return;document.querySelectorAll("article.article").forEach(function(a){var p=(a.offsetTop/d)*100;var m=document.createElement("span");m.style.top=p+"%";pChaps.appendChild(m)})}
+setTimeout(initCh,500);window.addEventListener("resize",initCh);
+window.addEventListener("scroll",function(){var h=document.documentElement;var d=h.scrollHeight-h.clientHeight;var p=d>0?(h.scrollTop/d)*100:0;var cl=Math.min(100,Math.max(0,p));pFill.style.height=cl+"%";pDot.style.bottom=cl+"%";pTrack.classList.toggle("visible",h.scrollTop>200)});
+
+// User state (reads from same localStorage as index.html)
+function renderNavUser(){
+  var nu=document.getElementById("navUser");
+  var n=localStorage.getItem("user_name");
+  var a=localStorage.getItem("user_avatar");
+  if(n){
+    var ini=n.charAt(0).toUpperCase();
+    var avHtml=a?'<img src="'+a+'" alt="">':ini;
+    nu.innerHTML='<span class="nav-user-avatar">'+avHtml+'</span><span class="nav-user-name">'+n+'</span>';
+  }else{
+    nu.innerHTML='<a href="index.html" style="font-size:.75rem;color:var(--ink-soft)">Sign in</a>';
+  }
+}
+renderNavUser();
+
+// Language sync
+var QT={"zh-CN":{back_projects:"返回项目",qy_badge:"长期项目 · 2025.09 –",qy_toc:"目录"},"zh-TW":{back_projects:"返回項目",qy_badge:"長期項目 · 2025.09 –",qy_toc:"目錄"},en:{back_projects:"Back to Projects",qy_badge:"Long-term · 2025.09 –",qy_toc:"Contents"},de:{back_projects:"Zurück zu Projekte",qy_badge:"Langfristig · 2025.09 –",qy_toc:"Inhaltsverzeichnis"},fr:{back_projects:"Retour aux Projets",qy_badge:"Long terme · 2025.09 –",qy_toc:"Sommaire"},ja:{back_projects:"プロジェクトに戻る",qy_badge:"長期 · 2025.09 –",qy_toc:"目次"}};
 try{var sl=localStorage.getItem("lang");if(sl&&QT[sl]){var d=QT[sl];document.querySelectorAll("[data-i18n]").forEach(function(el){var k=el.getAttribute("data-i18n");if(d[k]!==undefined)el.textContent=d[k]});document.documentElement.lang=sl}}catch(e){}
-const io=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add("in");io.unobserve(e.target)}})},{threshold:.1,rootMargin:"0px 0px -30px 0px"});
-document.querySelectorAll(".reveal").forEach(el=>io.observe(el));
+
+// Reveal animation
+var io=new IntersectionObserver(function(entries){entries.forEach(function(e){if(e.isIntersecting){e.target.classList.add("in");io.unobserve(e.target)}})},{threshold:.1,rootMargin:"0px 0px -30px 0px"});
+document.querySelectorAll(".reveal").forEach(function(el){io.observe(el)});
+
+// === ANNOTATION SYSTEM ===
+var annos=[];
+try{annos=JSON.parse(localStorage.getItem("qy_annos"))||[]}catch(e){annos=[]}
+var selRange=null;
+
+// Show popup on text selection (only for logged-in users)
+document.addEventListener("mouseup",function(e){
+  var popup=document.getElementById("annoPopup");
+  if(!localStorage.getItem("user_name")){popup.classList.remove("show");return}
+  var sel=window.getSelection();
+  if(!sel||sel.isCollapsed||!sel.toString().trim()){popup.classList.remove("show");return}
+  // Only allow annotation inside article-body
+  var node=sel.anchorNode;
+  var inBody=false;
+  while(node){if(node.classList&&node.classList.contains("article-body")){inBody=true;break}node=node.parentNode}
+  if(!inBody){popup.classList.remove("show");return}
+  selRange=sel.getRangeAt(0);
+  var rect=selRange.getBoundingClientRect();
+  popup.style.top=(rect.bottom+window.scrollY+8)+"px";
+  popup.style.left=(rect.left+window.scrollX+rect.width/2-40)+"px";
+  popup.classList.add("show");
+});
+
+document.getElementById("annoBtn").addEventListener("click",function(){
+  document.getElementById("annoPopup").classList.remove("show");
+  if(!selRange)return;
+  var text=selRange.toString().trim();
+  if(!text)return;
+  document.getElementById("annoQuote").textContent=text.length>120?text.substring(0,120)+"...":text;
+  document.getElementById("annoText").value="";
+  document.getElementById("annoOverlay").classList.add("show");
+});
+
+document.getElementById("annoCancelBtn").addEventListener("click",function(){
+  document.getElementById("annoOverlay").classList.remove("show");
+  selRange=null;
+});
+document.getElementById("annoOverlay").addEventListener("click",function(e){
+  if(e.target===this){this.classList.remove("show");selRange=null}
+});
+
+document.getElementById("annoSaveBtn").addEventListener("click",function(){
+  var comment=document.getElementById("annoText").value.trim();
+  if(!comment||!selRange)return;
+  var quote=selRange.toString().trim();
+  var userName=localStorage.getItem("user_name")||"Anonymous";
+  // Find position info for restoring highlights
+  var container=selRange.startContainer;
+  var articleEl=container;
+  while(articleEl&&!(articleEl.tagName==="ARTICLE")){articleEl=articleEl.parentNode}
+  var articleId=articleEl?articleEl.id:"";
+  annos.push({
+    id:Date.now(),
+    quote:quote.substring(0,200),
+    comment:comment,
+    author:userName,
+    articleId:articleId,
+    date:new Date().toLocaleDateString("zh-CN")
+  });
+  localStorage.setItem("qy_annos",JSON.stringify(annos));
+  // Highlight the selected text
+  try{
+    var mark=document.createElement("mark");
+    mark.className="anno-highlight";
+    mark.setAttribute("data-anno-id",annos[annos.length-1].id);
+    var tooltip=document.createElement("span");
+    tooltip.className="anno-tooltip";
+    tooltip.innerHTML='<span class="anno-author">'+userName+"</span>"+comment;
+    mark.appendChild(tooltip);
+    selRange.surroundContents(mark);
+  }catch(e){}
+  selRange=null;
+  document.getElementById("annoOverlay").classList.remove("show");
+  window.getSelection().removeAllRanges();
+  renderAnnoSidebar();
+});
+
+// Sidebar toggle
+document.getElementById("annoToggle").addEventListener("click",function(){
+  document.getElementById("annoSidebar").classList.toggle("open");
+});
+document.getElementById("closeSidebar").addEventListener("click",function(){
+  document.getElementById("annoSidebar").classList.remove("open");
+});
+
+function renderAnnoSidebar(){
+  var list=document.getElementById("annoList");
+  var toggle=document.getElementById("annoToggle");
+  toggle.classList.toggle("has-annos",annos.length>0);
+  if(!annos.length){list.innerHTML="<li style='color:var(--ink-soft);font-size:.8rem'>暂无批注</li>";return}
+  list.innerHTML="";
+  annos.slice().reverse().forEach(function(a){
+    var li=document.createElement("li");
+    li.innerHTML='<div class="aq">"'+a.quote+'"</div><div class="ac">'+a.comment+'</div><div class="am"><span>'+a.author+" · "+a.date+'</span><button class="del-anno" data-id="'+a.id+'">删除</button></div>';
+    list.appendChild(li);
+  });
+  list.querySelectorAll(".del-anno").forEach(function(btn){
+    btn.addEventListener("click",function(){
+      var id=parseInt(this.getAttribute("data-id"));
+      annos=annos.filter(function(a){return a.id!==id});
+      localStorage.setItem("qy_annos",JSON.stringify(annos));
+      var mark=document.querySelector('mark[data-anno-id="'+id+'"]');
+      if(mark){var parent=mark.parentNode;while(mark.firstChild){parent.insertBefore(mark.firstChild,mark)}parent.removeChild(mark)}
+      renderAnnoSidebar();
+    });
+  });
+}
+renderAnnoSidebar();
 </script>
 </body>
 </html>

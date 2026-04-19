@@ -154,8 +154,7 @@ nav .dropdown-menu .dm-badge.short{background:var(--steel);color:var(--cream)}
 .user-menu button{display:block;width:100%;padding:.6rem 1rem;border:none;background:transparent;font-family:var(--sans);font-size:.8rem;text-align:left;color:var(--ink-soft);cursor:pointer;transition:background .15s,color .15s}
 .user-menu button:hover{background:var(--cream-dark);color:var(--ink)}
 .user-menu .um-danger{color:var(--plum)}
-.modal-overlay{position:fixed;inset:0;background:color-mix(in srgb,var(--ink) 40%,transparent);z-index:200;display:none;align-items:center;justify-content:center;backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px)}
-.modal-overlay.show{display:flex}
+
 .modal{background:var(--cream);border-radius:12px;padding:2.5rem;max-width:380px;width:90%;box-shadow:0 20px 60px color-mix(in srgb,var(--ink) 15%,transparent);position:relative;animation:modalIn .3s ease}
 @keyframes modalIn{from{opacity:0;transform:scale(.95) translateY(10px)}to{opacity:1;transform:none}}
 .modal h3{font-family:var(--serif);font-size:1.5rem;font-weight:400;margin-bottom:.5rem;font-variation-settings:"opsz" 48}
@@ -206,16 +205,6 @@ footer{padding:2rem var(--gutter);border-top:1px solid var(--line);display:flex;
         <button data-lang="de">Deutsch</button>
         <button data-lang="fr">Français</button>
         <button data-lang="ja">日本語</button>
-      </div>
-    </div>
-    <div class="user-wrap" id="userWrap">
-      <button class="user-btn" id="userBtn">
-        <span class="user-avatar" id="userAvatar"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" width="14" height="14"><circle cx="8" cy="5.5" r="3"/><path d="M2.5 14.5c0-3 2.5-5 5.5-5s5.5 2 5.5 5"/></svg></span>
-        <span class="user-name" id="userName"></span>
-      </button>
-      <div class="user-menu" id="userMenu">
-        <button id="umEdit" data-i18n="u_edit">编辑资料</button>
-        <button id="umLogout" class="um-danger" data-i18n="u_logout">退出登录</button>
       </div>
     </div>
   </div>
@@ -301,26 +290,6 @@ footer{padding:2rem var(--gutter);border-top:1px solid var(--line);display:flex;
     </div>
   </div>
 </section>
-<!-- User Modal -->
-<div class="modal-overlay" id="modalOverlay">
-  <div class="modal">
-    <button class="close-btn" id="modalClose">&times;</button>
-    <h3 id="modalTitle" data-i18n="u_welcome">欢迎</h3>
-    <p id="modalDesc" data-i18n="u_desc">设置你的名称和头像</p>
-    <label for="inputName" data-i18n="u_name">昵称</label>
-    <input type="text" id="inputName" placeholder="输入你的名称" data-i18n-ph="u_placeholder" maxlength="20">
-    <label>头像</label>
-    <div class="avatar-upload">
-      <div class="avatar-preview" id="avatarPreview" onclick="document.getElementById('avatarFile').click()">
-        <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M10 4v12m-6-6h12"/></svg>
-      </div>
-      <span data-i18n="u_upload">点击上传图片</span>
-      <input type="file" id="avatarFile" accept="image/*">
-    </div>
-    <button class="submit-btn" id="submitUser" data-i18n="u_confirm">确认</button>
-  </div>
-</div>
-
 <footer><span>© 2026 Dylan Zhu</span></footer>
 <div class="modal-overlay" id="authModal">
   <div class="modal">
