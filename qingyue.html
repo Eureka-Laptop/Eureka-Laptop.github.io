@@ -11,7 +11,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT@0,9..144,300..900,0..100;1,9..144,300..900,0..100&family=Figtree:wght@300..900&family=Noto+Serif+SC:wght@300..900&display=swap" rel="stylesheet">
 <style>
-:root{--cream:#F4EFE2;--cream-dark:#EAE3D1;--ink:#1F1E1D;--ink-soft:#4A443C;--line:#D8CFB9;--terracotta:#CC785C;--sage:#8B956D;--steel:#7C9BB5;--serif:"Fraunces","Noto Serif SC",Georgia,serif;--sans:"Figtree","PingFang SC","Helvetica Neue",sans-serif;--cn:"Noto Serif SC","Songti SC",serif;--max:860px;--gutter:clamp(1.5rem,4vw,4rem)}
+:root{--cream:#F4EFE2;--cream-dark:#EAE3D1;--ink:#1F1E1D;--ink-soft:#4A443C;--line:#D8CFB9;--terracotta:#CC785C;--sage:#8B956D;--steel:#7C9BB5;--ochre:#C4A34D;--serif:"Fraunces","Noto Serif SC",Georgia,serif;--sans:"Figtree","PingFang SC","Helvetica Neue",sans-serif;--cn:"Noto Serif SC","Songti SC",serif;--max:860px;--gutter:clamp(1.5rem,4vw,4rem)}
 *{box-sizing:border-box;margin:0;padding:0}html{scroll-behavior:smooth}
 body{background:var(--cream);color:var(--ink);font-family:var(--sans);font-weight:400;line-height:1.7;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
 a{color:inherit;text-decoration:none}
@@ -92,7 +92,7 @@ footer{padding:2rem var(--gutter);border-top:1px solid var(--line);font-size:.75
 .anno-float .anno-save:hover{background:var(--terracotta)}
 mark.hl-only{background:color-mix(in srgb,var(--sage) 22%,transparent);border-bottom:2px solid var(--sage);padding:0 1px;border-radius:2px;cursor:pointer}
 mark.anno-highlight{background:color-mix(in srgb,var(--ochre) 25%,transparent);border-bottom:2px solid var(--ochre);cursor:pointer;padding:0 1px;border-radius:2px;position:relative}
-.anno-tooltip{position:absolute;bottom:calc(100% + 8px);left:50%;transform:translateX(-50%);background:var(--ink);color:var(--cream);padding:.6rem .8rem;border-radius:6px;font-family:var(--sans);font-size:.75rem;line-height:1.4;max-width:260px;white-space:normal;z-index:50;pointer-events:none;opacity:0;transition:opacity .2s;box-shadow:0 4px 12px color-mix(in srgb,var(--ink) 20%,transparent)}
+.anno-tooltip{position:absolute;bottom:calc(100% + 8px);left:50%;transform:translateX(-50%);background:color-mix(in srgb,var(--ink) 88%,transparent);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);color:var(--cream);padding:.75rem 1rem;border-radius:8px;font-family:var(--sans);font-size:.78rem;line-height:1.5;max-width:360px;min-width:180px;white-space:normal;z-index:50;pointer-events:none;opacity:0;transition:opacity .2s;box-shadow:0 4px 12px color-mix(in srgb,var(--ink) 20%,transparent)}
 .anno-tooltip::after{content:"";position:absolute;top:100%;left:50%;transform:translateX(-50%);border:5px solid transparent;border-top-color:var(--ink)}
 mark.anno-highlight:hover .anno-tooltip{opacity:1;pointer-events:auto}
 .anno-tooltip .reply-list{margin-top:.4rem;border-top:1px solid color-mix(in srgb,var(--cream) 15%,transparent);padding-top:.4rem}
@@ -102,6 +102,8 @@ mark.anno-highlight:hover .anno-tooltip{opacity:1;pointer-events:auto}
 .reply-input{display:flex;gap:.3rem;margin-top:.3rem}
 .reply-input input{flex:1;padding:.2rem .4rem;border:1px solid color-mix(in srgb,var(--cream) 25%,transparent);border-radius:4px;background:transparent;color:var(--cream);font-size:.65rem;font-family:var(--sans);outline:none}
 .reply-input button{background:var(--terracotta);color:var(--cream);border:none;border-radius:4px;padding:.2rem .4rem;font-size:.6rem;cursor:pointer}
+.anno-tooltip .del-btn{background:none;border:none;color:color-mix(in srgb,var(--cream) 50%,transparent);font-size:.6rem;cursor:pointer;text-decoration:underline;margin-top:.3rem;padding:0}
+.anno-tooltip .del-btn:hover{color:var(--cream)}
 .anno-tooltip .anno-author{color:var(--terracotta);font-weight:600;margin-bottom:.2rem;display:block;font-size:.65rem;letter-spacing:.06em}
 .anno-sidebar{position:fixed;right:0;top:0;bottom:0;width:320px;background:var(--cream);border-left:1px solid var(--line);z-index:160;transform:translateX(100%);transition:transform .3s ease;overflow-y:auto;padding:2rem 1.5rem}
 .anno-sidebar.open{transform:none}
@@ -114,8 +116,7 @@ mark.anno-highlight:hover .anno-tooltip{opacity:1;pointer-events:auto}
 .anno-list .am{display:flex;justify-content:space-between;margin-top:.4rem;font-size:.65rem;color:var(--ink-soft)}
 .anno-list .del-anno{background:none;border:none;color:var(--plum);cursor:pointer;font-size:.65rem}
 .anno-list .del-anno:hover{text-decoration:underline}
-.anno-toggle{position:fixed;right:1.5rem;bottom:2rem;width:44px;height:44px;border-radius:50%;background:var(--ink);color:var(--cream);border:none;cursor:pointer;z-index:155;display:none;align-items:center;justify-content:center;box-shadow:0 4px 12px color-mix(in srgb,var(--ink) 20%,transparent);transition:background .2s;font-size:1rem}
-.anno-toggle.has-annos{display:flex}
+.anno-toggle{position:fixed;right:1.5rem;bottom:2rem;width:44px;height:44px;border-radius:50%;background:var(--ink);color:var(--cream);border:none;cursor:pointer;z-index:155;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 12px color-mix(in srgb,var(--ink) 20%,transparent);transition:background .2s;font-size:1rem}
 .anno-toggle:hover{background:var(--terracotta)}
 </style>
 </head>
@@ -299,17 +300,17 @@ mark.anno-highlight:hover .anno-tooltip{opacity:1;pointer-events:auto}
 </article>
 
 <!-- Annotation UI -->
-<div class="anno-popup" id="annoPopup"><button id="hlBtn">― 划线</button><button id="annoBtn">✍ 批注</button></div>
+<div class="anno-popup" id="annoPopup"><button id="hlBtn" data-i18n="a_hl">― 划线</button><button id="annoBtn" data-i18n="a_an">✍ 批注</button></div>
 <div class="anno-float" id="annoFloat">
-  <textarea id="annoText" placeholder="写下你的想法..."></textarea>
+  <textarea id="annoText" placeholder="写下你的想法..." data-i18n-ph="a_placeholder"></textarea>
   <div class="anno-btns">
-    <button class="anno-cancel" id="annoCancelBtn">取消</button>
-    <button class="anno-save" id="annoSaveBtn">保存</button>
+    <button class="anno-cancel" id="annoCancelBtn" data-i18n="a_cancel">取消</button>
+    <button class="anno-save" id="annoSaveBtn" data-i18n="a_save">保存</button>
   </div>
 </div>
-<button class="anno-toggle" id="annoToggle" title="查看批注">📝</button>
+<button class="anno-toggle" id="annoToggle" title="查看批注"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" width="20" height="20"><path d="M3 14.5V17h2.5L14 8.5 11.5 6 3 14.5z"/><path d="M12.5 5l2.5 2.5 1.5-1.5-2.5-2.5L12.5 5z"/></svg></button>
 <div class="anno-sidebar" id="annoSidebar">
-  <h3>批注 <button class="close-sidebar" id="closeSidebar">&times;</button></h3>
+  <h3><span data-i18n="a_title">批注</span> <button class="close-sidebar" id="closeSidebar">&times;</button></h3>
   <ul class="anno-list" id="annoList"></ul>
 </div>
 
@@ -342,8 +343,8 @@ function renderNavUser(){
 renderNavUser();
 
 // Language sync
-var QT={"zh-CN":{back_projects:"返回项目",qy_badge:"长期项目 · 2025.09 –",qy_toc:"目录"},"zh-TW":{back_projects:"返回項目",qy_badge:"長期項目 · 2025.09 –",qy_toc:"目錄"},en:{back_projects:"Back to Projects",qy_badge:"Long-term · 2025.09 –",qy_toc:"Contents"},de:{back_projects:"Zurück zu Projekte",qy_badge:"Langfristig · 2025.09 –",qy_toc:"Inhaltsverzeichnis"},fr:{back_projects:"Retour aux Projets",qy_badge:"Long terme · 2025.09 –",qy_toc:"Sommaire"},ja:{back_projects:"プロジェクトに戻る",qy_badge:"長期 · 2025.09 –",qy_toc:"目次"}};
-try{var sl=localStorage.getItem("lang");if(sl&&QT[sl]){var d=QT[sl];document.querySelectorAll("[data-i18n]").forEach(function(el){var k=el.getAttribute("data-i18n");if(d[k]!==undefined)el.textContent=d[k]});document.documentElement.lang=sl}}catch(e){}
+var QT={"zh-CN":{back_projects:"返回项目",qy_badge:"长期项目 · 2025.09 –",qy_toc:"目录",a_hl:"― 划线",a_an:"✍ 批注",a_cancel:"取消",a_save:"保存",a_title:"批注",a_placeholder:"写下你的想法...",a_empty:"暂无批注",a_reply:"回复",a_delete:"删除",a_send:"发送",a_reply_ph:"回复...",a_highlight:"[划线]",a_annotation:"[批注]"},"zh-TW":{back_projects:"返回項目",qy_badge:"長期項目 · 2025.09 –",qy_toc:"目錄",a_hl:"― 劃線",a_an:"✍ 批註",a_cancel:"取消",a_save:"保存",a_title:"批註",a_placeholder:"寫下你的想法...",a_empty:"暫無批註",a_reply:"回覆",a_delete:"刪除",a_send:"發送",a_reply_ph:"回覆...",a_highlight:"[劃線]",a_annotation:"[批註]"},en:{back_projects:"Back to Projects",qy_badge:"Long-term · 2025.09 –",qy_toc:"Contents",a_hl:"― Highlight",a_an:"✍ Annotate",a_cancel:"Cancel",a_save:"Save",a_title:"Annotations",a_placeholder:"Write your thoughts...",a_empty:"No annotations yet",a_reply:"Reply",a_delete:"Delete",a_send:"Send",a_reply_ph:"Reply...",a_highlight:"[Highlight]",a_annotation:"[Annotation]"},de:{back_projects:"Zurück zu Projekte",qy_badge:"Langfristig · 2025.09 –",qy_toc:"Inhaltsverzeichnis",a_hl:"― Markieren",a_an:"✍ Anmerken",a_cancel:"Abbrechen",a_save:"Speichern",a_title:"Anmerkungen",a_placeholder:"Schreiben Sie Ihre Gedanken...",a_empty:"Noch keine Anmerkungen",a_reply:"Antworten",a_delete:"Löschen",a_send:"Senden",a_reply_ph:"Antworten...",a_highlight:"[Markierung]",a_annotation:"[Anmerkung]"},fr:{back_projects:"Retour aux Projets",qy_badge:"Long terme · 2025.09 –",qy_toc:"Sommaire",a_hl:"― Surligner",a_an:"✍ Annoter",a_cancel:"Annuler",a_save:"Enregistrer",a_title:"Annotations",a_placeholder:"Écrivez vos pensées...",a_empty:"Aucune annotation",a_reply:"Répondre",a_delete:"Supprimer",a_send:"Envoyer",a_reply_ph:"Répondre...",a_highlight:"[Surlignage]",a_annotation:"[Annotation]"},ja:{back_projects:"プロジェクトに戻る",qy_badge:"長期 · 2025.09 –",qy_toc:"目次",a_hl:"― ハイライト",a_an:"✍ 注釈",a_cancel:"キャンセル",a_save:"保存",a_title:"注釈",a_placeholder:"考えを書いてください...",a_empty:"注釈はまだありません",a_reply:"返信",a_delete:"削除",a_send:"送信",a_reply_ph:"返信...",a_highlight:"[ハイライト]",a_annotation:"[注釈]"}};
+try{var sl=localStorage.getItem("lang");if(sl&&QT[sl]){var d=QT[sl];document.querySelectorAll("[data-i18n]").forEach(function(el){var k=el.getAttribute("data-i18n");if(d[k]!==undefined)el.textContent=d[k]});document.querySelectorAll("[data-i18n-ph]").forEach(function(el){var k=el.getAttribute("data-i18n-ph");if(d[k]!==undefined)el.placeholder=d[k]});document.documentElement.lang=sl}}catch(e){}
 
 // Reveal animation
 var io=new IntersectionObserver(function(entries){entries.forEach(function(e){if(e.isIntersecting){e.target.classList.add("in");io.unobserve(e.target)}})},{threshold:.1,rootMargin:"0px 0px -30px 0px"});
@@ -369,8 +370,49 @@ annosRef.on("value",function(snap){
   annos=[];
   var data=snap.val();
   if(data){Object.keys(data).forEach(function(k){var a=data[k];a.id=k;annos.push(a)})}
+  restoreHighlights();
   renderAnnoSidebar();
-})
+});
+
+function restoreHighlights(){
+  // Remove existing marks first
+  document.querySelectorAll("mark.anno-highlight,mark.hl-only").forEach(function(m){
+    var p=m.parentNode;
+    while(m.firstChild){if(m.firstChild.className==="anno-tooltip"){m.removeChild(m.firstChild)}else{p.insertBefore(m.firstChild,m)}}
+    p.removeChild(m);p.normalize();
+  });
+  // Re-apply highlights from annos
+  annos.forEach(function(anno){
+    if(!anno.quote)return;
+    var bodies=document.querySelectorAll(".article-body");
+    for(var b=0;b<bodies.length;b++){
+      var found=findAndWrap(bodies[b],anno.quote.substring(0,80),anno);
+      if(found)break;
+    }
+  });
+}
+
+function findAndWrap(root,searchText,anno){
+  var tw=document.createTreeWalker(root,NodeFilter.SHOW_TEXT,null,false);
+  var node;
+  while(node=tw.nextNode()){
+    var idx=node.textContent.indexOf(searchText);
+    if(idx===-1)continue;
+    var range=document.createRange();
+    range.setStart(node,idx);
+    range.setEnd(node,Math.min(idx+searchText.length,node.textContent.length));
+    try{
+      var mark=document.createElement("mark");
+      mark.className=anno.type==="highlight"?"hl-only":"anno-highlight";
+      mark.setAttribute("data-anno-id",anno.id);
+      range.surroundContents(mark);
+      if(anno.type!=="highlight"&&anno.comment){rebuildTooltip(mark,anno)}
+      mark.addEventListener("click",function(){showFloatAt(this)});
+      return true;
+    }catch(e){return false}
+  }
+  return false;
+}
 var selRange=null;
 
 document.addEventListener("mouseup",function(e){
@@ -466,13 +508,22 @@ function rebuildTooltip(mark,anno){
   var html='<span class="anno-author">'+anno.author+"</span>"+anno.comment.replace(/\n/g,"<br>");
   if(anno.replies&&anno.replies.length){html+='<div class="reply-list">';
   anno.replies.forEach(function(r){html+='<div class="reply-item"><span class="ra">'+r.author+":</span> "+r.text+"</div>"});html+="</div>"}
-  html+='<button class="reply-btn" data-id="'+anno.id+'">回复</button>';
+  var LL=getAnnoLang();html+='<button class="reply-btn" data-id="'+anno.id+'">'+LL.reply+'</button> <button class="del-btn" data-id="'+anno.id+'">'+LL.del+'</button>';
   tip.innerHTML=html;mark.appendChild(tip);
+  tip.querySelector(".del-btn").addEventListener("click",function(e){
+    e.stopPropagation();
+    var did=this.getAttribute("data-id");
+    annosRef.child(did).remove();
+    annos=annos.filter(function(a){return a.id!==did});
+    var m=document.querySelector('mark[data-anno-id="'+did+'"]');
+    if(m){var p=m.parentNode;while(m.firstChild){if(m.firstChild.className!=="anno-tooltip")p.insertBefore(m.firstChild,m);else m.removeChild(m.firstChild)}p.removeChild(m)}
+    renderAnnoSidebar();
+  });
   tip.querySelector(".reply-btn").addEventListener("click",function(e){
     e.stopPropagation();
     if(!localStorage.getItem("user_name"))return;
     var btn=this;var ri=document.createElement("div");ri.className="reply-input";
-    ri.innerHTML='<input type="text" placeholder="回复..."><button>发送</button>';
+    var LR=getAnnoLang();ri.innerHTML='<input type="text" placeholder="'+LR.rph+'"><button>'+LR.send+'</button>';
     btn.after(ri);btn.style.display="none";
     ri.querySelector("button").addEventListener("click",function(){
       var txt=ri.querySelector("input").value.trim();if(!txt)return;
@@ -487,18 +538,28 @@ function rebuildTooltip(mark,anno){
 document.getElementById("annoToggle").addEventListener("click",function(){document.getElementById("annoSidebar").classList.toggle("open")});
 document.getElementById("closeSidebar").addEventListener("click",function(){document.getElementById("annoSidebar").classList.remove("open")});
 
+function getAnnoLang(){
+  var sl=localStorage.getItem("lang")||"zh-CN";
+  var m={"zh-CN":{empty:"暂无批注",hl:"[划线]",an:"[批注]",del:"删除",reply:"回复",send:"发送",rph:"回复..."},
+  "zh-TW":{empty:"暫無批註",hl:"[劃線]",an:"[批註]",del:"刪除",reply:"回覆",send:"發送",rph:"回覆..."},
+  en:{empty:"No annotations yet",hl:"[Highlight]",an:"[Annotation]",del:"Delete",reply:"Reply",send:"Send",rph:"Reply..."},
+  de:{empty:"Noch keine Anmerkungen",hl:"[Markierung]",an:"[Anmerkung]",del:"L\u00f6schen",reply:"Antworten",send:"Senden",rph:"Antworten..."},
+  fr:{empty:"Aucune annotation",hl:"[Surlignage]",an:"[Annotation]",del:"Supprimer",reply:"R\u00e9pondre",send:"Envoyer",rph:"R\u00e9pondre..."},
+  ja:{empty:"注釈はまだありません",hl:"[ハイライト]",an:"[注釈]",del:"削除",reply:"返信",send:"送信",rph:"返信..."}};
+  return m[sl]||m["zh-CN"];
+}
 function renderAnnoSidebar(){
+  var L=getAnnoLang();
   var list=document.getElementById("annoList");
   var toggle=document.getElementById("annoToggle");
-  toggle.classList.toggle("has-annos",annos.length>0);
-  if(!annos.length){list.innerHTML="<li style='color:var(--ink-soft);font-size:.8rem'>暂无批注</li>";return}
+  if(!annos.length){list.innerHTML="<li style='color:var(--ink-soft);font-size:.8rem'>"+L.empty+"</li>";return}
   list.innerHTML="";
   annos.slice().reverse().forEach(function(a){
     var li=document.createElement("li");
-    var typeLabel=a.type==="highlight"?"[划线]":"[批注]";
+    var typeLabel=a.type==="highlight"?L.hl:L.an;
     var replyHtml="";
     if(a.replies&&a.replies.length){a.replies.forEach(function(r){replyHtml+='<div style="font-size:.65rem;margin-top:.2rem;padding-left:.4rem;border-left:2px solid var(--terracotta)"><b>'+r.author+":</b> "+r.text+"</div>"})}
-    li.innerHTML='<div class="aq">'+typeLabel+' "'+a.quote+'"</div><div class="ac">'+a.comment+'</div>'+replyHtml+'<div class="am"><span>'+a.author+" · "+a.date+'</span><button class="del-anno" data-id="'+a.id+'">删除</button></div>';
+    li.innerHTML='<div class="aq">'+typeLabel+' "'+a.quote+'"</div><div class="ac">'+a.comment+'</div>'+replyHtml+'<div class="am"><span>'+a.author+" · "+a.date+'</span><button class="del-anno" data-id="'+a.id+'">'+L.del+'</button></div>';
     list.appendChild(li);
   });
   list.querySelectorAll(".del-anno").forEach(function(btn){
@@ -522,29 +583,7 @@ document.getElementById("closeSidebar").addEventListener("click",function(){
   document.getElementById("annoSidebar").classList.remove("open");
 });
 
-function renderAnnoSidebar(){
-  var list=document.getElementById("annoList");
-  var toggle=document.getElementById("annoToggle");
-  toggle.classList.toggle("has-annos",annos.length>0);
-  if(!annos.length){list.innerHTML="<li style='color:var(--ink-soft);font-size:.8rem'>暂无批注</li>";return}
-  list.innerHTML="";
-  annos.slice().reverse().forEach(function(a){
-    var li=document.createElement("li");
-    li.innerHTML='<div class="aq">"'+a.quote+'"</div><div class="ac">'+a.comment+'</div><div class="am"><span>'+a.author+" · "+a.date+'</span><button class="del-anno" data-id="'+a.id+'">删除</button></div>';
-    list.appendChild(li);
-  });
-  list.querySelectorAll(".del-anno").forEach(function(btn){
-    btn.addEventListener("click",function(){
-      var id=this.getAttribute("data-id");
-      annosRef.child(id).remove();
-      annos=annos.filter(function(a){return a.id!==id});
-      var mark=document.querySelector('mark[data-anno-id="'+id+'"]');
-      if(mark){var parent=mark.parentNode;while(mark.firstChild){parent.insertBefore(mark.firstChild,mark)}parent.removeChild(mark)}
-      renderAnnoSidebar();
-    });
-  });
-}
-renderAnnoSidebar();
+
 </script>
 </body>
 </html>
