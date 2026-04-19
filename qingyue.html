@@ -76,7 +76,7 @@ footer{padding:2rem var(--gutter);border-top:1px solid var(--line);font-size:.75
 
 /* ANNOTATIONS */
 .anno-popup{position:absolute;z-index:150;display:none;animation:popIn .15s ease}
-.anno-popup.show{display:block}
+.anno-popup.show{display:flex;gap:4px}
 .anno-popup button{background:color-mix(in srgb,var(--ink) 6%,transparent);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);color:var(--ink-soft);border:1px solid var(--line);border-radius:6px;padding:.4rem .7rem;font-size:.7rem;cursor:pointer;font-family:var(--sans);letter-spacing:.03em;white-space:nowrap;transition:all .2s;box-shadow:0 2px 8px color-mix(in srgb,var(--ink) 8%,transparent)}
 .anno-popup button:hover{background:color-mix(in srgb,var(--ink) 12%,transparent);color:var(--ink);border-color:var(--ink-soft)}
 @keyframes popIn{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
@@ -90,10 +90,18 @@ footer{padding:2rem var(--gutter);border-top:1px solid var(--line);font-size:.75
 .anno-float .anno-cancel:hover{border-color:var(--ink-soft)}
 .anno-float .anno-save{border:none;background:var(--ink);color:var(--cream)}
 .anno-float .anno-save:hover{background:var(--terracotta)}
+mark.hl-only{background:color-mix(in srgb,var(--sage) 22%,transparent);border-bottom:2px solid var(--sage);padding:0 1px;border-radius:2px;cursor:pointer}
 mark.anno-highlight{background:color-mix(in srgb,var(--ochre) 25%,transparent);border-bottom:2px solid var(--ochre);cursor:pointer;padding:0 1px;border-radius:2px;position:relative}
 .anno-tooltip{position:absolute;bottom:calc(100% + 8px);left:50%;transform:translateX(-50%);background:var(--ink);color:var(--cream);padding:.6rem .8rem;border-radius:6px;font-family:var(--sans);font-size:.75rem;line-height:1.4;max-width:260px;white-space:normal;z-index:50;pointer-events:none;opacity:0;transition:opacity .2s;box-shadow:0 4px 12px color-mix(in srgb,var(--ink) 20%,transparent)}
 .anno-tooltip::after{content:"";position:absolute;top:100%;left:50%;transform:translateX(-50%);border:5px solid transparent;border-top-color:var(--ink)}
-mark.anno-highlight:hover .anno-tooltip{opacity:1}
+mark.anno-highlight:hover .anno-tooltip{opacity:1;pointer-events:auto}
+.anno-tooltip .reply-list{margin-top:.4rem;border-top:1px solid color-mix(in srgb,var(--cream) 15%,transparent);padding-top:.4rem}
+.anno-tooltip .reply-item{font-size:.65rem;margin-top:.3rem;padding-left:.5rem;border-left:2px solid var(--terracotta)}
+.anno-tooltip .reply-item .ra{color:var(--terracotta);font-weight:600}
+.anno-tooltip .reply-btn{background:none;border:none;color:var(--cream);font-size:.6rem;cursor:pointer;text-decoration:underline;margin-top:.3rem;padding:0}
+.reply-input{display:flex;gap:.3rem;margin-top:.3rem}
+.reply-input input{flex:1;padding:.2rem .4rem;border:1px solid color-mix(in srgb,var(--cream) 25%,transparent);border-radius:4px;background:transparent;color:var(--cream);font-size:.65rem;font-family:var(--sans);outline:none}
+.reply-input button{background:var(--terracotta);color:var(--cream);border:none;border-radius:4px;padding:.2rem .4rem;font-size:.6rem;cursor:pointer}
 .anno-tooltip .anno-author{color:var(--terracotta);font-weight:600;margin-bottom:.2rem;display:block;font-size:.65rem;letter-spacing:.06em}
 .anno-sidebar{position:fixed;right:0;top:0;bottom:0;width:320px;background:var(--cream);border-left:1px solid var(--line);z-index:160;transform:translateX(100%);transition:transform .3s ease;overflow-y:auto;padding:2rem 1.5rem}
 .anno-sidebar.open{transform:none}
@@ -291,7 +299,7 @@ mark.anno-highlight:hover .anno-tooltip{opacity:1}
 </article>
 
 <!-- Annotation UI -->
-<div class="anno-popup" id="annoPopup"><button id="annoBtn">✍ 批注</button></div>
+<div class="anno-popup" id="annoPopup"><button id="hlBtn">― 划线</button><button id="annoBtn">✍ 批注</button></div>
 <div class="anno-float" id="annoFloat">
   <textarea id="annoText" placeholder="写下你的想法..."></textarea>
   <div class="anno-btns">
@@ -344,40 +352,61 @@ var annos=[];
 try{annos=JSON.parse(localStorage.getItem("qy_annos"))||[]}catch(e){annos=[]}
 var selRange=null;
 
-// Show popup on text selection (only for logged-in users)
 document.addEventListener("mouseup",function(e){
   var popup=document.getElementById("annoPopup");
+  var fl=document.getElementById("annoFloat");
+  if(e.target.closest&&e.target.closest(".anno-popup,.anno-float,.anno-tooltip"))return;
   if(!localStorage.getItem("user_name")){popup.classList.remove("show");return}
   var sel=window.getSelection();
   if(!sel||sel.isCollapsed||!sel.toString().trim()){popup.classList.remove("show");return}
-  // Only allow annotation inside article-body
-  var node=sel.anchorNode;
-  var inBody=false;
+  var node=sel.anchorNode;var inBody=false;
   while(node){if(node.classList&&node.classList.contains("article-body")){inBody=true;break}node=node.parentNode}
   if(!inBody){popup.classList.remove("show");return}
   selRange=sel.getRangeAt(0);
   var rect=selRange.getBoundingClientRect();
-  popup.style.top=(rect.bottom+window.scrollY+8)+"px";
-  popup.style.left=(rect.left+window.scrollX+rect.width/2-40)+"px";
+  popup.style.top=(rect.bottom+window.scrollY+6)+"px";
+  popup.style.left=(rect.left+window.scrollX+rect.width/2-60)+"px";
   popup.classList.add("show");
 });
 
+// Highlight only
+document.getElementById("hlBtn").addEventListener("click",function(){
+  document.getElementById("annoPopup").classList.remove("show");
+  if(!selRange)return;
+  try{var mark=document.createElement("mark");mark.className="hl-only";selRange.surroundContents(mark);
+  var q=mark.textContent.substring(0,200);
+  annos.push({id:Date.now(),quote:q,comment:"",author:localStorage.getItem("user_name")||"",articleId:"",date:new Date().toLocaleDateString("zh-CN"),type:"highlight",replies:[]});
+  localStorage.setItem("qy_annos",JSON.stringify(annos));
+  mark.setAttribute("data-anno-id",annos[annos.length-1].id);
+  mark.addEventListener("click",function(){showFloatAt(mark)});
+  }catch(e){}
+  selRange=null;window.getSelection().removeAllRanges();renderAnnoSidebar();
+});
+
+// Annotate
 document.getElementById("annoBtn").addEventListener("click",function(){
-  var popup=document.getElementById("annoPopup");
-  popup.classList.remove("show");
+  document.getElementById("annoPopup").classList.remove("show");
   if(!selRange)return;
   var rect=selRange.getBoundingClientRect();
+  showFloat(rect.bottom+window.scrollY+6,Math.max(8,Math.min(rect.left+window.scrollX,window.innerWidth-350)));
+});
+
+function showFloat(top,left){
   var fl=document.getElementById("annoFloat");
-  fl.style.top=(rect.bottom+window.scrollY+6)+"px";
-  fl.style.left=Math.max(8,Math.min(rect.left+window.scrollX,window.innerWidth-350))+"px";
+  fl.style.top=top+"px";fl.style.left=left+"px";
   document.getElementById("annoText").value="";
   fl.classList.add("show");
   document.getElementById("annoText").focus();
-});
+}
+function showFloatAt(mark){
+  if(!localStorage.getItem("user_name"))return;
+  var rect=mark.getBoundingClientRect();
+  selRange=document.createRange();selRange.selectNodeContents(mark);
+  showFloat(rect.bottom+window.scrollY+6,Math.max(8,rect.left+window.scrollX));
+}
 
 document.getElementById("annoCancelBtn").addEventListener("click",function(){
-  document.getElementById("annoFloat").classList.remove("show");
-  selRange=null;
+  document.getElementById("annoFloat").classList.remove("show");selRange=null;
 });
 
 document.getElementById("annoSaveBtn").addEventListener("click",function(){
@@ -385,36 +414,84 @@ document.getElementById("annoSaveBtn").addEventListener("click",function(){
   if(!comment||!selRange)return;
   var quote=selRange.toString().trim();
   var userName=localStorage.getItem("user_name")||"Anonymous";
-  // Find position info for restoring highlights
-  var container=selRange.startContainer;
-  var articleEl=container;
-  while(articleEl&&!(articleEl.tagName==="ARTICLE")){articleEl=articleEl.parentNode}
-  var articleId=articleEl?articleEl.id:"";
-  annos.push({
-    id:Date.now(),
-    quote:quote.substring(0,200),
-    comment:comment,
-    author:userName,
-    articleId:articleId,
-    date:new Date().toLocaleDateString("zh-CN")
-  });
-  localStorage.setItem("qy_annos",JSON.stringify(annos));
-  // Highlight the selected text
-  try{
-    var mark=document.createElement("mark");
-    mark.className="anno-highlight";
+  var container=selRange.startContainer;var articleEl=container;
+  while(articleEl&&!(articleEl.tagName==="ARTICLE"))articleEl=articleEl.parentNode;
+  // Check if already inside a mark
+  var existingMark=selRange.startContainer;
+  while(existingMark&&existingMark.tagName!=="MARK")existingMark=existingMark.parentNode;
+  if(existingMark&&existingMark.tagName==="MARK"){
+    var eid=parseInt(existingMark.getAttribute("data-anno-id"));
+    var existing=annos.find(function(a){return a.id===eid});
+    if(existing){existing.comment=existing.comment?(existing.comment+"\n---\n"+userName+": "+comment):(userName+": "+comment);
+    localStorage.setItem("qy_annos",JSON.stringify(annos));
+    existingMark.className="anno-highlight";rebuildTooltip(existingMark,existing);}
+  }else{
+    annos.push({id:Date.now(),quote:quote.substring(0,200),comment:comment,author:userName,articleId:articleEl?articleEl.id:"",date:new Date().toLocaleDateString("zh-CN"),type:"annotation",replies:[]});
+    localStorage.setItem("qy_annos",JSON.stringify(annos));
+    try{var mark=document.createElement("mark");mark.className="anno-highlight";
     mark.setAttribute("data-anno-id",annos[annos.length-1].id);
-    var tooltip=document.createElement("span");
-    tooltip.className="anno-tooltip";
-    tooltip.innerHTML='<span class="anno-author">'+userName+"</span>"+comment;
-    mark.appendChild(tooltip);
     selRange.surroundContents(mark);
-  }catch(e){}
-  selRange=null;
-  document.getElementById("annoFloat").classList.remove("show");
-  window.getSelection().removeAllRanges();
-  renderAnnoSidebar();
+    rebuildTooltip(mark,annos[annos.length-1]);
+    mark.addEventListener("click",function(){showFloatAt(mark)});
+    }catch(e){}
+  }
+  selRange=null;document.getElementById("annoFloat").classList.remove("show");
+  window.getSelection().removeAllRanges();renderAnnoSidebar();
 });
+
+function rebuildTooltip(mark,anno){
+  var old=mark.querySelector(".anno-tooltip");if(old)old.remove();
+  var tip=document.createElement("span");tip.className="anno-tooltip";
+  var html='<span class="anno-author">'+anno.author+"</span>"+anno.comment.replace(/\n/g,"<br>");
+  if(anno.replies&&anno.replies.length){html+='<div class="reply-list">';
+  anno.replies.forEach(function(r){html+='<div class="reply-item"><span class="ra">'+r.author+":</span> "+r.text+"</div>"});html+="</div>"}
+  html+='<button class="reply-btn" data-id="'+anno.id+'">回复</button>';
+  tip.innerHTML=html;mark.appendChild(tip);
+  tip.querySelector(".reply-btn").addEventListener("click",function(e){
+    e.stopPropagation();
+    if(!localStorage.getItem("user_name"))return;
+    var btn=this;var ri=document.createElement("div");ri.className="reply-input";
+    ri.innerHTML='<input type="text" placeholder="回复..."><button>发送</button>';
+    btn.after(ri);btn.style.display="none";
+    ri.querySelector("button").addEventListener("click",function(){
+      var txt=ri.querySelector("input").value.trim();if(!txt)return;
+      if(!anno.replies)anno.replies=[];
+      anno.replies.push({author:localStorage.getItem("user_name"),text:txt});
+      localStorage.setItem("qy_annos",JSON.stringify(annos));
+      rebuildTooltip(mark,anno);renderAnnoSidebar();
+    });
+  });
+}
+
+document.getElementById("annoToggle").addEventListener("click",function(){document.getElementById("annoSidebar").classList.toggle("open")});
+document.getElementById("closeSidebar").addEventListener("click",function(){document.getElementById("annoSidebar").classList.remove("open")});
+
+function renderAnnoSidebar(){
+  var list=document.getElementById("annoList");
+  var toggle=document.getElementById("annoToggle");
+  toggle.classList.toggle("has-annos",annos.length>0);
+  if(!annos.length){list.innerHTML="<li style='color:var(--ink-soft);font-size:.8rem'>暂无批注</li>";return}
+  list.innerHTML="";
+  annos.slice().reverse().forEach(function(a){
+    var li=document.createElement("li");
+    var typeLabel=a.type==="highlight"?"[划线]":"[批注]";
+    var replyHtml="";
+    if(a.replies&&a.replies.length){a.replies.forEach(function(r){replyHtml+='<div style="font-size:.65rem;margin-top:.2rem;padding-left:.4rem;border-left:2px solid var(--terracotta)"><b>'+r.author+":</b> "+r.text+"</div>"})}
+    li.innerHTML='<div class="aq">'+typeLabel+' "'+a.quote+'"</div><div class="ac">'+a.comment+'</div>'+replyHtml+'<div class="am"><span>'+a.author+" · "+a.date+'</span><button class="del-anno" data-id="'+a.id+'">删除</button></div>';
+    list.appendChild(li);
+  });
+  list.querySelectorAll(".del-anno").forEach(function(btn){
+    btn.addEventListener("click",function(){
+      var id=parseInt(this.getAttribute("data-id"));
+      annos=annos.filter(function(a){return a.id!==id});
+      localStorage.setItem("qy_annos",JSON.stringify(annos));
+      var mark=document.querySelector('mark[data-anno-id="'+id+'"]');
+      if(mark){var p=mark.parentNode;while(mark.firstChild){if(mark.firstChild.className!=="anno-tooltip")p.insertBefore(mark.firstChild,mark);else mark.removeChild(mark.firstChild)}p.removeChild(mark)}
+      renderAnnoSidebar();
+    });
+  });
+}
+renderAnnoSidebar();
 
 // Sidebar toggle
 document.getElementById("annoToggle").addEventListener("click",function(){
