@@ -16,11 +16,13 @@ body::before{content:"";position:fixed;inset:0;pointer-events:none;z-index:1;bac
 
 /* NAV */
 nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:1.25rem var(--gutter);display:flex;justify-content:space-between;align-items:center;background:color-mix(in srgb,var(--cream) 82%,transparent);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
+.progress-track{position:fixed;left:1.5rem;top:50%;transform:translateY(-50%);width:3px;height:40vh;background:var(--line);border-radius:100px;z-index:101;pointer-events:none;opacity:0;transition:opacity .4s}.progress-track.visible{opacity:1}.progress-fill{position:absolute;bottom:0;left:0;width:100%;background:var(--terracotta);border-radius:100px;transition:none}.progress-dot{position:absolute;left:50%;width:11px;height:11px;border-radius:50%;background:var(--terracotta);transform:translate(-50%,50%);box-shadow:0 0 0 3px var(--cream),0 0 8px color-mix(in srgb,var(--terracotta) 30%,transparent);transition:none}.progress-pct{display:none}.progress-chapters{position:absolute;left:0;top:0;width:3px;height:100%}.progress-chapters span{position:absolute;left:0;width:100%;height:2px;background:color-mix(in srgb,var(--cream) 60%,transparent)}@media(max-width:768px){.progress-track{display:none}}
 nav .mark{font-family:var(--serif);font-weight:500;font-size:1.25rem;font-variation-settings:"SOFT" 30,"opsz" 20;letter-spacing:-.01em}
 nav .mark em{font-style:italic;color:var(--terracotta);font-weight:400}
 nav .back{display:flex;align-items:center;gap:.5rem;font-size:.85rem;color:var(--ink-soft);letter-spacing:.04em;transition:color .2s}
 nav .back:hover{color:var(--terracotta)}
 nav .back svg{width:16px;height:16px}
+.nav-user{display:flex;align-items:center;gap:.5rem}.nav-user-avatar{width:24px;height:24px;border-radius:50%;background:var(--line);overflow:hidden;display:flex;align-items:center;justify-content:center;font-size:.6rem;font-weight:600;color:var(--ink-soft)}.nav-user-avatar img{width:100%;height:100%;object-fit:cover}.nav-user-name{font-size:.75rem;color:var(--ink-soft)}
 
 /* HEADER */
 .page-header{padding:8rem var(--gutter) 3rem;max-width:var(--max);margin:0 auto;position:relative;z-index:2}
@@ -72,22 +74,22 @@ footer{padding:2rem var(--gutter);border-top:1px solid var(--line);font-size:.75
 </head>
 <body>
 
+<div class="progress-track" id="progressTrack"><div class="progress-fill" id="progressFill"></div><div class="progress-dot" id="progressDot"></div><span class="progress-pct" id="progressPct">0%</span><div class="progress-chapters" id="progressChapters"></div></div>
 <nav>
   <a href="index.html" class="mark">dylanzhu<em>.</em>com</a>
-  <a href="index.html#research" class="back">
-    <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M10 3L5 8l5 5"/></svg>
-    返回项目
+  <a href="index.html#research" class="back"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M10 3L5 8l5 5"/></svg><span data-i18n="back_projects">返回项目</span></a>
   </a>
+  <div class="nav-user" id="navUser"></div>
 </nav>
 
 <section class="page-header">
-  <span class="badge">长期项目 · 2025.09 –</span>
+  <span class="badge" data-i18n="qy_badge">长期项目 · 2025.09 –</span>
   <h1>「青悦马社」中国人民大学《资本论》读书小组</h1>
   <p class="desc">围绕马克思《资本论》及相关经典文本，组织系统性精读与讨论，深入把握政治经济学批判的理论脉络。</p>
 </section>
 
 <section class="toc">
-  <h2>目录 · Contents</h2>
+  <h2 data-i18n="qy_toc">目录</h2>
   <ol class="toc-list">
     <li class="reveal"><a href="#session-39"><span class="toc-title">第39期：剩余价值率</span><span class="toc-date">2026.04.16</span></a></li>
     <li class="reveal"><a href="#session-38"><span class="toc-title">第38期：不变资本与可变资本</span><span class="toc-date">2026.04.09</span></a></li>
@@ -255,6 +257,10 @@ footer{padding:2rem var(--gutter);border-top:1px solid var(--line);font-size:.75
 </footer>
 
 <script>
+const pTrack=document.getElementById("progressTrack"),pFill=document.getElementById("progressFill"),pDot=document.getElementById("progressDot"),pPct=document.getElementById("progressPct"),pChaps=document.getElementById("progressChapters");function initCh(){pChaps.innerHTML="";var d=document.documentElement.scrollHeight-document.documentElement.clientHeight;if(d<=0)return;document.querySelectorAll("article.article").forEach(function(a){var p=(a.offsetTop/d)*100;var m=document.createElement("span");m.style.top=p+"%";pChaps.appendChild(m)})}setTimeout(initCh,500);window.addEventListener("resize",initCh);window.addEventListener("scroll",function(){var h=document.documentElement;var d=h.scrollHeight-h.clientHeight;var p=d>0?(h.scrollTop/d)*100:0;var cl=Math.min(100,Math.max(0,p));pFill.style.height=cl+"%";pDot.style.bottom=cl+"%";pPct.style.bottom=cl+"%";pPct.textContent=Math.round(cl)+"%";pTrack.classList.toggle("visible",h.scrollTop>200)});
+try{var su=JSON.parse(localStorage.getItem("siteUser"));if(su&&su.name){var nu=document.getElementById("navUser");var av=su.avatar?"<img src=""+su.avatar+"" alt="">": su.name.charAt(0).toUpperCase();nu.innerHTML="<span class="nav-user-avatar">"+av+"</span><span class="nav-user-name">"+su.name+"</span>"}}catch(e){}
+const QT={"zh-CN":{back_projects:"返回项目",qy_badge:"长期项目 · 2025.09 –",qy_toc:"目录"},"zh-TW":{back_projects:"返回項目",qy_badge:"長期項目 · 2025.09 –",qy_toc:"目錄"},en:{back_projects:"Back to Projects",qy_badge:"Long-term · 2025.09 –",qy_toc:"Contents"},de:{back_projects:"Zurück zu Projekte",qy_badge:"Langfristig · 2025.09 –",qy_toc:"Inhaltsverzeichnis"},fr:{back_projects:"Retour aux Projets",qy_badge:"Long terme · 2025.09 –",qy_toc:"Sommaire"},ja:{back_projects:"プロジェクトに戻る",qy_badge:"長期 · 2025.09 –",qy_toc:"目次"}};
+try{var sl=localStorage.getItem("lang");if(sl&&QT[sl]){var d=QT[sl];document.querySelectorAll("[data-i18n]").forEach(function(el){var k=el.getAttribute("data-i18n");if(d[k]!==undefined)el.textContent=d[k]});document.documentElement.lang=sl}}catch(e){}
 const io=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add("in");io.unobserve(e.target)}})},{threshold:.1,rootMargin:"0px 0px -30px 0px"});
 document.querySelectorAll(".reveal").forEach(el=>io.observe(el));
 </script>
