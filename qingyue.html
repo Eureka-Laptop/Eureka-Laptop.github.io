@@ -3,6 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="icon" href="favicon.ico" sizes="any">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
 <title>「青悦马社」中国人民大学《资本论》读书小组 — dylanzhu.com</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -72,24 +75,21 @@ footer{padding:2rem var(--gutter);border-top:1px solid var(--line);font-size:.75
 @media(max-width:768px){.toc-list a{grid-template-columns:1fr;gap:.3rem}.toc-list .toc-date{order:-1}}
 
 /* ANNOTATIONS */
-.anno-popup{position:absolute;z-index:150;background:var(--ink);color:var(--cream);border-radius:8px;padding:.5rem .75rem;font-family:var(--sans);font-size:.75rem;display:none;box-shadow:0 4px 16px color-mix(in srgb,var(--ink) 30%,transparent);animation:popIn .2s ease}
-.anno-popup.show{display:flex;align-items:center;gap:.5rem}
-.anno-popup button{background:var(--terracotta);color:var(--cream);border:none;border-radius:100px;padding:.3rem .7rem;font-size:.7rem;cursor:pointer;font-family:var(--sans);letter-spacing:.04em;white-space:nowrap;transition:opacity .2s}
-.anno-popup button:hover{opacity:.85}
+.anno-popup{position:absolute;z-index:150;display:none;animation:popIn .15s ease}
+.anno-popup.show{display:block}
+.anno-popup button{background:color-mix(in srgb,var(--ink) 6%,transparent);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);color:var(--ink-soft);border:1px solid var(--line);border-radius:6px;padding:.4rem .7rem;font-size:.7rem;cursor:pointer;font-family:var(--sans);letter-spacing:.03em;white-space:nowrap;transition:all .2s;box-shadow:0 2px 8px color-mix(in srgb,var(--ink) 8%,transparent)}
+.anno-popup button:hover{background:color-mix(in srgb,var(--ink) 12%,transparent);color:var(--ink);border-color:var(--ink-soft)}
 @keyframes popIn{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
-.anno-modal-overlay{position:fixed;inset:0;background:color-mix(in srgb,var(--ink) 40%,transparent);z-index:200;display:none;align-items:center;justify-content:center;backdrop-filter:blur(6px)}
-.anno-modal-overlay.show{display:flex}
-.anno-modal{background:var(--cream);border-radius:12px;padding:2rem;max-width:420px;width:90%;box-shadow:0 20px 60px color-mix(in srgb,var(--ink) 15%,transparent);animation:popIn .3s ease}
-.anno-modal h4{font-family:var(--serif);font-size:1.1rem;font-weight:400;margin-bottom:.3rem}
-.anno-modal .anno-quote{font-family:var(--cn);font-size:.85rem;color:var(--ink-soft);border-left:3px solid var(--terracotta);padding:.5rem .75rem;margin:.75rem 0;background:var(--cream-dark);border-radius:0 4px 4px 0;line-height:1.5;max-height:80px;overflow:hidden}
-.anno-modal textarea{width:100%;height:80px;border:1px solid var(--line);border-radius:6px;background:var(--cream-dark);font-family:var(--sans);font-size:.85rem;color:var(--ink);padding:.6rem;resize:vertical;outline:none;margin:.75rem 0}
-.anno-modal textarea:focus{border-color:var(--terracotta)}
-.anno-modal .anno-btns{display:flex;gap:.5rem;justify-content:flex-end}
-.anno-modal .anno-btns button{padding:.5rem 1rem;border-radius:100px;font-family:var(--sans);font-size:.8rem;cursor:pointer;transition:all .2s}
-.anno-modal .anno-cancel{border:1px solid var(--line);background:transparent;color:var(--ink-soft)}
-.anno-modal .anno-cancel:hover{border-color:var(--ink-soft)}
-.anno-modal .anno-save{border:none;background:var(--ink);color:var(--cream)}
-.anno-modal .anno-save:hover{background:var(--terracotta)}
+.anno-float{position:absolute;z-index:200;display:none;width:min(340px,85vw);background:var(--cream);border:1px solid var(--line);border-radius:8px;box-shadow:0 8px 30px color-mix(in srgb,var(--ink) 12%,transparent);padding:1rem;animation:popIn .2s ease}
+.anno-float.show{display:block}
+.anno-float textarea{width:100%;height:60px;border:1px solid var(--line);border-radius:6px;background:var(--cream-dark);font-family:var(--sans);font-size:.82rem;color:var(--ink);padding:.5rem;resize:none;outline:none}
+.anno-float textarea:focus{border-color:var(--terracotta)}
+.anno-float .anno-btns{display:flex;gap:.4rem;justify-content:flex-end;margin-top:.5rem}
+.anno-float .anno-btns button{padding:.35rem .8rem;border-radius:100px;font-family:var(--sans);font-size:.72rem;cursor:pointer;transition:all .2s}
+.anno-float .anno-cancel{border:1px solid var(--line);background:transparent;color:var(--ink-soft)}
+.anno-float .anno-cancel:hover{border-color:var(--ink-soft)}
+.anno-float .anno-save{border:none;background:var(--ink);color:var(--cream)}
+.anno-float .anno-save:hover{background:var(--terracotta)}
 mark.anno-highlight{background:color-mix(in srgb,var(--ochre) 25%,transparent);border-bottom:2px solid var(--ochre);cursor:pointer;padding:0 1px;border-radius:2px;position:relative}
 .anno-tooltip{position:absolute;bottom:calc(100% + 8px);left:50%;transform:translateX(-50%);background:var(--ink);color:var(--cream);padding:.6rem .8rem;border-radius:6px;font-family:var(--sans);font-size:.75rem;line-height:1.4;max-width:260px;white-space:normal;z-index:50;pointer-events:none;opacity:0;transition:opacity .2s;box-shadow:0 4px 12px color-mix(in srgb,var(--ink) 20%,transparent)}
 .anno-tooltip::after{content:"";position:absolute;top:100%;left:50%;transform:translateX(-50%);border:5px solid transparent;border-top-color:var(--ink)}
@@ -291,16 +291,12 @@ mark.anno-highlight:hover .anno-tooltip{opacity:1}
 </article>
 
 <!-- Annotation UI -->
-<div class="anno-popup" id="annoPopup"><button id="annoBtn">+ 批注</button></div>
-<div class="anno-modal-overlay" id="annoOverlay">
-  <div class="anno-modal">
-    <h4>添加批注</h4>
-    <div class="anno-quote" id="annoQuote"></div>
-    <textarea id="annoText" placeholder="写下你的想法..."></textarea>
-    <div class="anno-btns">
-      <button class="anno-cancel" id="annoCancelBtn">取消</button>
-      <button class="anno-save" id="annoSaveBtn">保存</button>
-    </div>
+<div class="anno-popup" id="annoPopup"><button id="annoBtn">✍ 批注</button></div>
+<div class="anno-float" id="annoFloat">
+  <textarea id="annoText" placeholder="写下你的想法..."></textarea>
+  <div class="anno-btns">
+    <button class="anno-cancel" id="annoCancelBtn">取消</button>
+    <button class="anno-save" id="annoSaveBtn">保存</button>
   </div>
 </div>
 <button class="anno-toggle" id="annoToggle" title="查看批注">📝</button>
@@ -367,21 +363,21 @@ document.addEventListener("mouseup",function(e){
 });
 
 document.getElementById("annoBtn").addEventListener("click",function(){
-  document.getElementById("annoPopup").classList.remove("show");
+  var popup=document.getElementById("annoPopup");
+  popup.classList.remove("show");
   if(!selRange)return;
-  var text=selRange.toString().trim();
-  if(!text)return;
-  document.getElementById("annoQuote").textContent=text.length>120?text.substring(0,120)+"...":text;
+  var rect=selRange.getBoundingClientRect();
+  var fl=document.getElementById("annoFloat");
+  fl.style.top=(rect.bottom+window.scrollY+6)+"px";
+  fl.style.left=Math.max(8,Math.min(rect.left+window.scrollX,window.innerWidth-350))+"px";
   document.getElementById("annoText").value="";
-  document.getElementById("annoOverlay").classList.add("show");
+  fl.classList.add("show");
+  document.getElementById("annoText").focus();
 });
 
 document.getElementById("annoCancelBtn").addEventListener("click",function(){
-  document.getElementById("annoOverlay").classList.remove("show");
+  document.getElementById("annoFloat").classList.remove("show");
   selRange=null;
-});
-document.getElementById("annoOverlay").addEventListener("click",function(e){
-  if(e.target===this){this.classList.remove("show");selRange=null}
 });
 
 document.getElementById("annoSaveBtn").addEventListener("click",function(){
@@ -415,7 +411,7 @@ document.getElementById("annoSaveBtn").addEventListener("click",function(){
     selRange.surroundContents(mark);
   }catch(e){}
   selRange=null;
-  document.getElementById("annoOverlay").classList.remove("show");
+  document.getElementById("annoFloat").classList.remove("show");
   window.getSelection().removeAllRanges();
   renderAnnoSidebar();
 });
