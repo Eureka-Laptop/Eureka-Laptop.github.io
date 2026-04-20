@@ -26,7 +26,7 @@ nav .left{display:flex;align-items:center;gap:.75rem}
 nav .back{width:30px;height:30px;border-radius:50%;border:1px solid var(--line);display:flex;align-items:center;justify-content:center;transition:all .3s}
 nav .back:hover{border-color:var(--ink-soft);background:var(--cream-dark)}
 nav .back svg{width:14px;height:14px;color:var(--ink-soft)}
-.nav-user{display:flex;align-items:center;gap:.5rem;flex-direction:row}.nav-user-avatar{width:26px;height:26px;border-radius:50%;background:var(--line);overflow:hidden;display:flex;align-items:center;justify-content:center;font-size:.6rem;font-weight:600;color:var(--ink-soft);flex-shrink:0}.nav-user-avatar img{width:100%;height:100%;object-fit:cover}.nav-user-name{font-size:.72rem;color:var(--ink-soft);white-space:nowrap}
+.nav-user{display:flex;align-items:center;gap:.5rem;flex-direction:row;flex-wrap:nowrap}.nav-user-avatar{width:26px;height:26px;border-radius:50%;background:var(--line);overflow:hidden;display:flex;align-items:center;justify-content:center;font-size:.6rem;font-weight:600;color:var(--ink-soft);flex-shrink:0}.nav-user-avatar img{width:100%;height:100%;object-fit:cover}.nav-user-name{font-size:.72rem;color:var(--ink-soft);white-space:nowrap;font-family:var(--serif);font-variation-settings:"opsz" 20;letter-spacing:.02em}
 
 /* HEADER */
 .page-header{padding:8rem var(--gutter) 3rem;max-width:var(--max);margin:0 auto;position:relative;z-index:2}
@@ -55,8 +55,19 @@ nav .back svg{width:14px;height:14px;color:var(--ink-soft)}
 .article-body{font-family:var(--cn);font-size:.95rem;line-height:1.9;color:var(--ink)}
 .article-body p{margin-bottom:1.25rem;text-indent:2em}
 .article-body p:first-child{text-indent:0}
-.footnote{background:#fff;border:1px solid var(--line);border-radius:6px;padding:.75rem 1rem;margin:.5rem 0 1.5rem;font-size:.78rem;color:var(--ink-soft);line-height:1.5;text-indent:0;font-family:var(--sans)}
+.footnote{background:var(--cream-dark);border:1px solid var(--line);border-radius:6px;padding:.75rem 1rem;margin:.5rem 0 1.5rem;font-size:.78rem;color:var(--ink-soft);line-height:1.5;text-indent:0;font-family:var(--sans)}
 .footnote sup{color:var(--terracotta);font-weight:600;margin-right:.3rem}
+.article-body .bullet{text-indent:0;padding-left:2em;position:relative;margin-bottom:.6rem}
+.article-body .bullet::before{content:"—";position:absolute;left:.5em;color:var(--terracotta)}
+.article-body .figure{text-indent:0;text-align:center;margin:1.5rem 0}
+.article-body .figure img{max-width:100%;height:auto;border-radius:4px}
+.article-body .figure-caption{font-size:.75rem;color:var(--ink-soft);margin-top:.5rem;font-family:var(--sans)}
+.article-body .math{text-indent:0;text-align:center;font-family:"Times New Roman",serif;font-style:italic;padding:.75rem 0;font-size:1rem;letter-spacing:.05em}
+.article-body .endnote{background:var(--cream-dark);border:1px solid var(--line);border-radius:6px;padding:.75rem 1rem;margin:.5rem 0 1.25rem;font-size:.78rem;color:var(--ink-soft);line-height:1.5;text-indent:0;font-family:var(--sans)}
+.article-body .endnote sup{color:var(--terracotta);font-weight:600;margin-right:.3rem}
+.article-body table{width:100%;border-collapse:collapse;margin:1rem 0;font-size:.82rem;font-family:var(--sans)}
+.article-body th,.article-body td{border:1px solid var(--line);padding:.4rem .6rem;text-align:center}
+.article-body th{background:var(--cream-dark);font-weight:600;font-size:.75rem}
 .article-body .speaker{font-weight:700;color:var(--terracotta);text-indent:0;margin-top:2rem;margin-bottom:.5rem;font-family:var(--sans);font-size:.85rem;letter-spacing:.06em}
 .article-body .speaker:first-of-type{margin-top:0}
 .article-body .section-label{font-family:var(--serif);font-size:1.15rem;letter-spacing:.15em;color:var(--ink);font-weight:400;margin-top:3rem;margin-bottom:1.5rem;text-indent:0;padding-bottom:.75rem;border-bottom:1px solid var(--line);text-align:center;font-variation-settings:"SOFT" 40,"opsz" 60}
@@ -97,7 +108,7 @@ mark.hl-only{background:color-mix(in srgb,var(--sage) 22%,transparent);border-bo
 mark.anno-highlight{background:color-mix(in srgb,var(--ochre) 25%,transparent);border-bottom:2px solid var(--ochre);cursor:pointer;padding:0 1px;border-radius:2px;position:relative}
 .anno-tooltip{position:absolute;bottom:calc(100% + 8px);left:50%;transform:translateX(-50%);background:color-mix(in srgb,var(--ink) 88%,transparent);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);color:var(--cream);padding:.75rem 1rem;border-radius:8px;font-family:var(--sans);font-size:.82rem;line-height:1.6;max-width:400px;min-width:220px;width:max-content;white-space:normal;z-index:50;pointer-events:none;opacity:0;transition:opacity .2s;box-shadow:0 4px 12px color-mix(in srgb,var(--ink) 20%,transparent)}
 .anno-tooltip::after{content:"";position:absolute;top:100%;left:50%;transform:translateX(-50%);border:5px solid transparent;border-top-color:var(--ink)}
-mark.anno-highlight:hover .anno-tooltip,.anno-tooltip:hover{opacity:1;pointer-events:auto}
+mark.anno-highlight:hover .anno-tooltip,.anno-tooltip:hover,.anno-tooltip:focus-within{opacity:1;pointer-events:auto}
 .anno-tooltip .reply-list{margin-top:.4rem;border-top:1px solid color-mix(in srgb,var(--cream) 15%,transparent);padding-top:.4rem}
 .anno-tooltip .reply-item{font-size:.65rem;margin-top:.3rem;padding-left:.5rem;border-left:2px solid var(--terracotta)}
 .anno-tooltip .reply-item .ra{color:var(--terracotta);font-weight:600}
@@ -142,7 +153,7 @@ mark.anno-highlight:hover .anno-tooltip,.anno-tooltip:hover{opacity:1;pointer-ev
   <span class="badge" data-i18n="qy_badge">翻译</span>
   <h1>货币变容的结构理论</h1>
   <p class="desc">小幡道昭（Michiaki Obata）</p>
-  <p class="desc" style="margin-top:.75rem;font-size:.8rem;color:var(--ink-soft);line-height:1.6">作者简介：小幡道昭（1950——），日本经济学家，宇野学派第三代学者。主要研究领域为马克思主义经济学。东京大学名誉教授。<br>译文简介：本译文根据2023年4月《季刊经济理論》第60卷第1号翻译。</p>
+  <p class="desc" style="margin-top:.5rem;font-size:.8rem;color:var(--ink-soft);line-height:1.6">作者简介：小幡道昭（1950——），日本经济学家，宇野学派第三代学者。主要研究领域为马克思主义经济学。东京大学名誉教授。<br>译文简介：本译文根据2023年4月《季刊经济理論》第60卷第1号翻译。</p>
 </section>
 
 <article class="article" id="translation-1">
@@ -160,8 +171,8 @@ mark.anno-highlight:hover .anno-tooltip,.anno-tooltip:hover{opacity:1;pointer-ev
     <div class="footnote"><sup>4</sup>不要将其与“货币商品”Geldware (Marx [1867]: 84)混淆。《资本论》中出现的“货币商品”指的是“成为”货币的特定商品，如货币商品金。这个术语会给后文讲述的等价物是“从”商品“制造出来的”等价物构成体说的理解带来无用的混乱，因此本文不使用它。</div>
     <p>商品的定义通过与“物（モノ）”的区别而明确给出。“物（モノ）”这个术语相当于传统上使用的“商品体”(Marx [1867]:50)，但因为这个词给无论是否是商品都保持不变的对象加上了“商品”这一修饰词，从而封死了将其从商品中独立开来作为其本身进行考察的途径。变更术语就是为了解开这一封印。</p>
     <p>片假名的“物（モノ）”比指代超越知觉对象的“东西”（もの）要窄（例如“看不见的东西”），又比指代占据一定空间的物理实体“物体（有体物）”要宽，通常被用来广泛指代所有的知觉对象。在本文中，进一步将“物（モノ）”限定为具备以下性质的具有量的对象，并将这种物的量称为物量。</p>
-    <p style="text-indent:0;padding-left:1.5em">· 无论是作为连续量来测量，还是作为离散量来计数，均能作为数量被“衡量”（计量可能性）。</p>
-    <p style="text-indent:0;padding-left:1.5em">· 其数量可以相加（加算可能性）。</p>
+    <p class="bullet">无论是作为连续量来测量，还是作为离散量来计数，均能作为数量被“衡量”（计量可能性）。</p>
+    <p class="bullet">其数量可以相加（加算可能性）。</p>
     <p>“量”分为即使能测量也不能直接相加的“内涵量”（如气温或速度），以及可以直接相加的“外延量”（如重量或长度）。<sup>5</sup>上述限定相当于将物（モノ）定义为具有外延量的对象。物量是外延的，但作为等价物发展形态的价格则是内涵的，不能直接相加。正如速度乘以时间变为距离后才能相加一样，价格也只有乘以物量化为金额后才能获得加算性。忽视这一点导致了平均价格和物价等概念的混乱，这是众所周知的事实。<sup>6</sup>另外，关于稍后所述的价值，我们要考虑的是连性质1都不具备的特殊量。在这里，牢记具有性质1和2的物量、仅具有性质1的价格（等价物）、既不具有性质1也不具有性质2的价值之间的相位差，将有助于后续的理解。</p>
     <div class="footnote"><sup>6</sup>指数的悖论。小幡[2009]: 61。</div>
     <div class="footnote"><sup>5</sup>银林（1975）。此外，“即使是无形物，只要在任何主体的眼中都存在明确的边界，且它们之间没有重叠，就可以称之为物（モノ）”（小幡[2009]: 21）这一规定，实际上也是将物（モノ）限定为具有“外延量”的对象。</div>
@@ -184,8 +195,8 @@ mark.anno-highlight:hover .anno-tooltip,.anno-tooltip:hover{opacity:1;pointer-ev
     <p>表现=现象意味着存在于不可感知世界的“某物”，自然而然地在可感知世界中“显现”，它成为一种将不可感知的对象与可感知的对象联系起来的先验概念。在这种情况下，“某物”并不是独立于现象而先于现象存在的。不存在没有影子的“某物”，也不会出现影子有时产生、有时不产生的情况。“某物”与影子是不可分割的。价值就是“某物”，而这个“某物”同时就是“显现”出来的。价值并不“实际存在(existieren)”一种不伴随现象、无论何时何地都不变的“共同的实体(die gemeinschaftliche Substanz)” (Marx [1867]: 74)。价值并不具备“实体”与“形态”这两个可分离的属性，相反，不可感知的价值总是与可感知的价值形态形成不可分割的对偶而显现(erscheinen)。因此，本文不使用只会与价值存在和价值表现的同时性产生冲突并引发混乱的“实体”这种冗余词。价值的表现方式，即价值的现象形态，简称价值形态，在下文中“形态” (Form) 一词将严格限定在这一意义上使用，而不采用作为“实体”反义词的“形态”用法。</p>
     <p class="speaker">作为构成体的等价物</p>
     <p>在价值表现方式即现象形态中，最重要的是“等同”这一概念，它必然需要“等同物”即等价物 (equivalent) 的存在。尽管商品的价值通过与物量的一一对应而具有量的属性，但它属于不可感知的世界，没有自身的单位，也无法直接相加。其价值的展现形式为：</p>
-    <p style="text-indent:0;padding-left:1.5em">· 从某个任意商品中“制造出”等价物；</p>
-    <p style="text-indent:0;padding-left:1.5em">· 认定为与该等价物“等同”。</p>
+    <p class="bullet">从某个任意商品中“制造出”等价物；</p>
+    <p class="bullet">认定为与该等价物“等同”。</p>
     <p>等价物本身是物（モノ），但由于这种物同时处于商品状态，根据前述的客观价值说，它与其价值具有唯一对应的联系。</p>
     <p>重要的是，商品本身既“不是”等价物，也没有直接“成为”等价物，而是将商品的物量和价值暂时剥离，再按照一定规则重新结合，从而形成为从商品中“制造出来的”独特构成体。让我们更详细地探讨这一点。</p>
     <p>一般而言，“x等同于R”指的是选择一个能直接体现x属性的R，即“x是R” (x is R)。例如，当我们说“她是一朵玫瑰花”时，x和R显然属于不同的世界、不同的维度。因此，即使x is R，R is x即“玫瑰花是她”也是没有意义的。被认为等同的“玫瑰花”是为了表现她的美丽，通过联想各种各样的玫瑰花 {r0, r1, …} 创造出来的美的典型或观念R，而不是这朵或那朵实际的玫瑰花{r0, r1, …}。在这个意义上，与“她像一朵玫瑰花”相比，“她是一朵玫瑰花”这句话中，“玫瑰花”的抽象程度明显提升了一个层次。</p>
@@ -193,6 +204,9 @@ mark.anno-highlight:hover .anno-tooltip,.anno-tooltip:hover{opacity:1;pointer-ev
     <p>将价值表现形态理解为“寻求交换的形态”，会模糊等价物是有别于实体商品的独特构成体这一事实。等价物作为交换的对象变为了实体商品，从而使价值形态论的焦点转移到“哪个商品被选为等价物”的选择上。从这个意义上讲，也有必要从价值的定义中彻底剔除“交换”一词。</p>
     <p class="speaker">复数的构成法</p>
     <p>既然已经明确等价物是独特的构成体，就能看出其构成方式并非只有一种。只是它实际会呈现出何种方式，在此阶段尚无法在理论上唯一确定。可以肯定的是一个“不是单一方式”的否定命题，目前能做到的只是分析构成等价物的各项要素，并指出相应组合的分支方向。作为可能的分支，在这里，我们将针对以往普遍设想的直接型，探讨一种可称为间接型的另一种构成方式。直接型是指从处于特定商品状态的物（モノ）中构成等价物的方式，而间接型则是从代表对同样处于特定商品状态的物的请求权的证书（债权证书=债务证书）中构成等价物的方式。</p>
+    <div class="figure"><img src="image_direct.png" alt="直接型"><p class="figure-caption">直接型等价物构成</p></div>
+    <div class="figure"><img src="image_indirect.png" alt="间接型"><p class="figure-caption">间接型等价物构成</p></div>
+
     <p>在间接型的情况下，关键要注意请求权的对象是物（モノ）而不是商品。一听到债务证书，经济学家往往会自然地联想到金钱债务证书。延期付款购买时发行的债务证书，当然是金钱债务证书。《资本论》中“支付手段”部分出现的“信用货币”(Marx [1867]: 154)也是金钱债务证书。然而，受这种联想影响，如果试图在这个阶段从商品买卖中说明债务证书的产生，就必然会陷入以货币存在为前提来解释货币的循环论。更何况，如果粗率地认为金钱债务证书是由货币的借贷产生的，就会走向利息该如何解释等偏离主题的歧途，并为自找的矛盾而烦恼。法律上的债权（claim）是一个广义的概念，“即使不能以金钱估价的对象，也可以作为债权的标的”（日本《民法》第399条）。它不仅限于金钱或物品，还包括提供劳务或实现承包业务等向他人请求给付的权利（Right in Personam），与针对所有物的权利即物权（Right in Rem）相对。当然，这里考虑的债权并不是这种广泛的债权一般。构成等价物的债权的对象可能是什么，这才是需要解答的问题。</p>
     <p>在演绎推论中，必须时刻牢记什么已被定义，什么已被证明。目前给定的只有关于物（モノ）和商品的基本定义以及几个辅助命题，我们正处于试图基于这些来证明与货币存在相关的核心命题的抽象阶段。因此，第一，构成等价物的债权不可能是以货币存在为前提的金钱债务证书，这是显而易见的。第二，将债权的给付对象设定为商品本身，也违背了前文等价物是“从”商品“制造出来的”构成体这一规定。本来，借贷的对象要么是“金钱”要么是“物品”。“商品”的借贷只有在对商品期货买卖进行独特解释的情况下勉强算作一种特殊状态（小幡 [2009]: 302），而期货交易是派生于交易所现货买卖的、以货币存在为前提的规定。因此，在逻辑上，构成等价物的债权既不是针对货币也不是针对商品，而是被限定为以物（モノ）为给付对象的种类债权（fungible claim<sup>8</sup>）。</p>
     <div class="footnote"><sup>8</sup>与特定物债券相对，又译作“可代替物请求权”，指有权向债务人索要“一定数量和特定规格”的通用物品，而不是某件“独一无二”的具体物品。——译者注</div>
@@ -206,9 +220,9 @@ mark.anno-highlight:hover .anno-tooltip,.anno-tooltip:hover{opacity:1;pointer-ev
     <p class="section-label">3 价值形态的基底</p>
     <p class="speaker">商品集合</p>
     <p>到此为止我们能够确认以下几点：</p>
-    <p style="text-indent:0;padding-left:1.5em">· 同种商品虽然无法直接衡量，但其内在拥有特定大小的同一价值。</p>
-    <p style="text-indent:0;padding-left:1.5em">· 商品价值是通过构成使物量与价值量一一对应的等价物来表现的。</p>
-    <p style="text-indent:0;padding-left:1.5em">· 等价物的构成方法不只限于一种。</p>
+    <p class="bullet">同种商品虽然无法直接衡量，但其内在拥有特定大小的同一价值。</p>
+    <p class="bullet">商品价值是通过构成使物量与价值量一一对应的等价物来表现的。</p>
+    <p class="bullet">等价物的构成方法不只限于一种。</p>
     <p>由此可见，价值表现的主语是商品种。成问题的是种与种之间的关系，因此所有者的问题被舍去了。需要阐明的是一旦混合便无法区分的同种大量亚麻布或上衣等之间的关系，在目前的抽象层面，这些亚麻布或上衣由谁持有无关紧要。</p>
     <p>这一点是本文基本构思的重要切入点，但为防止读者一时难以理解，需补充说明。构成障碍的是一个暗含的前提：被表现的是所有者拥有的特定部分商品的价值，以及将商品视作“个”而非“种”的固有观念。人们倾向于认为，“20码亚麻布=1件上衣”是亚麻布所有者A所持亚麻布的价值表现，而在另一个所有者B那里，完全可以是“10码亚麻布=5磅茶”。如果将价值形态视为“寻求交换的形态”，那么即便是同种商品，根据寻求交换的主体不同，其价值表现也会七零八落。然而，被表现的价值本来就是种的属性，出发点应是以商品种为要素的商品集合。无论有多少个亚麻布所有者，作为集合要素的亚麻布只有一个。货币便产生于这种商品集合所具备的独特结构中。<sup>9</sup></p>
     <div class="footnote"><sup>9</sup>本刊也出现了不以金属货币为前提，而在价值形态论的层面推导信用货币的尝试。江原[2021]通过设想承担“无货币中介业务”、寻求增殖的主体，岩田[2022]则更直接地考虑到银行业资本，引入了债权债务的“中介者X”，在不以商品买卖为前提的情况下直接推导出债权债务关系，作了相当复杂的构思。这些都可以说是将分化发生论在信用论研究中的成果加以抽象化，并试图移植到价值形态论中去。只是，从商业信用到银行信用的展开，是在逻辑上解明“必定如此”的“必然性”的“强展开”。从商品的价值表现推导出“商品货币”的阶段必须依靠阐明其必然性的“强展开”，但之后，在表明这种“商品货币”的实现在逻辑上“不会”是“实物货币”这一单一方式，而“信用货币”这种其他方式也在逻辑上“可能存在”的阶段，就必须切换到处理“可能性”的“弱展开”。两篇论文在价值形态论的层面过于强烈地论证了“信用货币”的必然性，这就导致虽然目标是建立“实物货币+信用货币=商品货币”的货币统合理论，结果却可能变成得出只有“信用货币”才是“真正的货币”这一结论。造成这种结果的原因在于，它们依然依赖于将价值形态理解为“寻求交换的形态”并重视主体作用的分化发生论。关于这一点，将在下文“分化发生论与价值形态”一节中进行彻底的反思。</div>
@@ -228,39 +242,52 @@ mark.anno-highlight:hover .anno-tooltip,.anno-tooltip:hover{opacity:1;pointer-ev
     <p>“扩大”究竟问题出在哪？诚然，如果将等价物扩大至全商品种，这就和“与‘所有’商品等同”这一价值定义相吻合。但是，这个“所有”是“潜在地”，而并非“同时地”。在某一时刻的价值，只能以“其中任意”一个作为等价物表现出来。无视“潜在地”这一制约而扩大等价物，就是在一个要素内提前读取整体，这切断了从要素间关系解析整体结构的道路。这就是问题所在。正确的出发点应该是：相互平等的商品种集合，各自以其他任意一个商品种作为等价物来表现其价值，通过分析这一商品集合的结构并提取等价物统一的各项契机，才是正确的方法。</p>
     <p class="section-label">4 价值形态的展开</p>
     <p class="speaker">价值形态的锁链</p>
-    <p>因为所有的商品都是用由其他特定某一商品构成的等价物来表现其价值，所以假设商品集合为 A={a1, a2…, an}，“等同”这一关系就可以用映射φ: A→A来表示。不过，与自身“等同”的关系虽然正确，但不能作为价值的表现，因此在ai⟼ aj中i≠j。并且假设商品集合是有限的。如果加入时间的契机，商品的种类也许会无限增加，但在特定的某一时刻，其数量再多也是有上限的。进一步，假设等价物的等价物仍是自身的等价物这一传递律：</p>
-    <p>ai⟼aj ⋀ aj⟼ak⟹ ai⟼ak</p>
+    <p>因为所有的商品都是用由其他特定某一商品构成的等价物来表现其价值，所以假设商品集合为 <span style="font-family:serif;font-style:italic">A = {a<sub>1</sub>, a<sub>2</sub>, …, a<sub>n</sub>}</span>，“等同”这一关系就可以用映射φ: A→A来表示。不过，与自身“等同”的关系虽然正确，但不能作为价值的表现，因此在 <span style="font-family:serif;font-style:italic">a<sub>i</sub> ⟼ a<sub>j</sub></span> 中 <span style="font-family:serif;font-style:italic">i≠j</span>。并且假设商品集合是有限的。如果加入时间的契机，商品的种类也许会无限增加，但在特定的某一时刻，其数量再多也是有上限的。进一步，假设等价物的等价物仍是自身的等价物这一传递律：</p>
+    <p></p>
+    <p class="math">a<sub>i</sub> ⟼ a<sub>j</sub> ∧ a<sub>j</sub> ⟼ a<sub>k</sub> ⟹ a<sub>i</sub> ⟼ a<sub>k</sub></p>
+    <p></p>
     <p>最后一点需要进行补充的是，由商品集合中各要素进行的价值表现ai⟼ aj，全都是将其价值——“虽为潜在，但可与所有商品等置”——通过某个任意的等价物表现出来的，在这一点上，它潜藏着一种以该价值为共同基底，并将其与“潜在的全体”联系起来的性质。为了揭示这种隐藏的联系，可以考虑几种方法，但“等价物的等价物也是等价物”这一传递律是最容易处理的。正是在这个意义上，本文采用了这一假设，且必须声明，传递律相当于公理公设，并非从某个前提推导出来的定理。</p>
-    <p>在φ(A)的要素中，可能存在不被任何其他商品作为等价物的商品，因此φ(A)是A的子集，一般情况下，该映射既非满射也非单射。不过，如果重复进行这一映射并探索等价物链，最终会出现φ变为双射的子集。这样，商品集合A的结构就浮现出来了。</p>
+    <p>在<span style="font-family:serif;font-style:italic">φ(A)</span> 的要素中，可能存在不被任何其他商品作为等价物的商品，因此<span style="font-family:serif;font-style:italic">φ(A)</span> 是 <span style="font-family:serif;font-style:italic">A</span> 的子集，一般情况下，该映射既非满射也非单射。不过，如果重复进行这一映射并探索等价物链，最终会出现<span style="font-family:serif;font-style:italic">φ</span> 变为双射的子集。这样，商品集合A的结构就浮现出来了。</p>
     <p>至此，所需的基础已构建完毕。接下来的内容将是形式上的结构分析，因此我将简要展示其手法。</p>
     <p class="speaker">等价物的锁链</p>
     <p> 商品集合A的结构相对容易看透。它呈现出带有粗干的树木枝杈的形状。不被任何商品等置的商品位于细枝末端，这些细枝汇集成大枝，再汇集为更粗的枝干，最后抵达主干。并且这个主干形成了一个循环（cycle）。所谓循环，是指ai⟼ aj, aj⟼ ak,…,az⟼ ai 这样一条无论从哪里出发都会回到原点的闭合连链。包含两个要素的链也算作循环。</p>
-    <p>示例：用16种商品进行确认。给各商品种从0编号到15，假设它们依次将 12, 4, 7, 5, 8, 12, 7, 8, 1, 10, 13, 3, 3, 1, 12, 7 作为等价物。将这种映射关系φ=（0121 42 73 548 512 6 77 88 19 1010 1311 312 313 114 12157）图示出来，就成了图1的样子，解开等价物链，则会浮现出如图2所示的结构。</p>
-    <p>在此例中，对商品集合A0={0, 1,…15}重复执行3次φ映射后得到A3={1, 4, 8, 3, 5, 12}，之后无论再重复映射多少次，都会保持A3 = A4 =…不变。因为A3由C1={1,4,8}和 C2={3,5,12}这两个不相交的子集组成，且C1, C2在映射下构成了等价类。</p>
+    <p>示例：用16种商品进行确认。给各商品种从0编号到15，假设它们依次将 12, 4, 7, 5, 8, 12, 7, 8, 1, 10, 13, 3, 3, 1, 12, 7 作为等价物。将这种映射关系<span style="font-family:serif;font-style:italic">φ</span>图示出来，就成了图1的样子，解开等价物链，则会浮现出如图2所示的结构。</p>
+    <div class="figure"><img src="image_fig12.png" alt="图1和图2"><p class="figure-caption">图1：映射关系 φ 的图示 / 图2：等价物链的树状结构</p></div>
+
+    <p>在此例中，对商品集合<span style="font-family:serif;font-style:italic">A<sub>0</sub> = {0, 1, …, 15}</span>重复执行3次φ映射后得到<span style="font-family:serif;font-style:italic">A<sub>3</sub> = {1, 4, 8, 3, 5, 12}</span>，之后无论再重复映射多少次，都会保持<span style="font-family:serif;font-style:italic">A<sub>3</sub> = A<sub>4</sub> = …</span>不变。因为<span style="font-family:serif;font-style:italic">A<sub>3</sub></span> 由 <span style="font-family:serif;font-style:italic">C<sub>1</sub> = {1, 4, 8}</span> 和 <span style="font-family:serif;font-style:italic">C<sub>2</sub> = {3, 5, 12}</span>这两个不相交的子集组成，且C1, C2在映射下构成了等价类。</p>
     <p>若使用随机数互换等价物数组的元素，左图每次都会改变形状。并且，如果增大数组的大小，就会出现犹如旋转万花筒般复杂多样的图案。然而，贯穿其中，一般会成立以下定理：</p>
     <p>定理：如果商品集合A是有限的，则至少存在一个循环。</p>
     <p>证明：假设不存在循环。从不被其他商品作为等价物的商品出发，依次追踪等价物链。如果碰到已经追踪过的链要素则结束。位于这条链末端的商品也必须以某一商品作为等价物，且该等价物不能是商品集合A的要素。这与商品集合A是有限的产生矛盾。故，至少存在一个循环。</p>
     <p>该定理并不排除存在多个循环的情况。如果商品种类增加且商品集合A的大小增大，循环数是否也会随之增加？还是只停留在少数？不妨试将商品种类的数量增至16、64、256、512、1024，并利用随机数对等价物排列变化100次，统计循环数量，得到了以下结果<sup>10</sup>。</p>
     <div class="footnote"><sup>10</sup>依据https://gken.jp/gken/2022/09/07/4088/登载的程序代码得出。</div>
-    <p style="text-indent:0;font-family:var(--sans);font-size:.85rem;color:var(--ink-soft)">**商品种的数量** | **循环数量**</p>
-    <p style="text-indent:0;font-family:var(--sans);font-size:.85rem;color:var(--ink-soft)"> | 1 | 2 | 3 | 4 | 5 | 6 | 7</p>
-    <p style="text-indent:0;font-family:var(--sans);font-size:.85rem;color:var(--ink-soft)">**16      ** | 64 | 33 | 3 | — | — | — | —</p>
-    <p style="text-indent:0;font-family:var(--sans);font-size:.85rem;color:var(--ink-soft)">**64      ** | 42 | 35 | 16 | 2 | — | — | —</p>
-    <p style="text-indent:0;font-family:var(--sans);font-size:.85rem;color:var(--ink-soft)">**256      ** | 17 | 39 | 28 | 12 | 4 | — | —</p>
-    <p style="text-indent:0;font-family:var(--sans);font-size:.85rem;color:var(--ink-soft)">**512      ** **1024      ** | 21 | 28 | 26 | 17 | 7 | 1 | —</p>
-    <p style="text-indent:0;font-family:var(--sans);font-size:.85rem;color:var(--ink-soft)"> | 12 | 17 | 31 | 23 | 11 | 5 | 1</p>
-    <p>在100次试验中，循环数量的分布仍有很大波动，但大致能观察到以下几点。循环数量的最大值是商品种的数量除以2所得的商，所以会成比例地增至8, 32, 128, 256, 512，但实际的循环数量，在方差略微扩大的情况下，其中位数仅发生1, 1, 2, 2, 3的微小偏移。循环数量的分布显著偏向较小值的一侧，这表明商品集合具有围绕极少数循环聚集的性质。在各商品之间，发挥着将等价物进行统合的强劲内力。</p>
+    <table>
+      <thead>
+        <tr><th rowspan="2">商品种的数量</th><th colspan="7">循环数量</th></tr>
+        <tr><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th><th>6</th><th>7</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>16</td><td>64</td><td>33</td><td>3</td><td>—</td><td>—</td><td>—</td><td>—</td></tr>
+        <tr><td>64</td><td>42</td><td>35</td><td>16</td><td>2</td><td>—</td><td>—</td><td>—</td></tr>
+        <tr><td>256</td><td>17</td><td>39</td><td>28</td><td>12</td><td>4</td><td>—</td><td>—</td></tr>
+        <tr><td>512</td><td>21</td><td>28</td><td>26</td><td>17</td><td>7</td><td>1</td><td>—</td></tr>
+        <tr><td>1024</td><td>12</td><td>17</td><td>31</td><td>23</td><td>11</td><td>5</td><td>1</td></tr>
+      </tbody>
+    </table>
+
+        <p>在100次试验中，循环数量的分布仍有很大波动，但大致能观察到以下几点。循环数量的最大值是商品种的数量除以2所得的商，所以会成比例地增至8, 32, 128, 256, 512，但实际的循环数量，在方差略微扩大的情况下，其中位数仅发生1, 1, 2, 2, 3的微小偏移。循环数量的分布显著偏向较小值的一侧，这表明商品集合具有围绕极少数循环聚集的性质。在各商品之间，发挥着将等价物进行统合的强劲内力。</p>
     <p class="speaker">循环的构成要素与连接要素</p>
     <p>商品集合A的要素要么是某个循环的构成要素，要么是连接到该循环的连接要素。因此，所有要素都可以根据循环毫无遗漏地进行分类。</p>
-    <p>由于一般假设了传递律，对于某个循环构成要素的集合 C={c1, c2,…, cn}，对于任意的 k, l，通过循环始终能使得如下的对称律成立：ck⟼ cl⟹cl⟼ ck。作为价值表现而言虽无意义，但由于ck⟼ ck也始终为真，因此循环构成要素的集合C满足自反律、对称律、传递律，构成了代数中所说的等价关系 ck∽cl。所以可以说，C中的任何要素都可以凭借相同的资格成为共同的等价物，也可以说，存在能以一代表全体的要素。</p>
-    <p>构成与集合C中某要素c相连的单根枝条的连接要素集合 B={b1, b2,…, bk}，通过传递律，对所有i=1, 2, …, k均有bi⟼c成立。即，所有循环连接要素的商品都会被直接等置于同一个等价物。</p>
+    <p>由于一般假设了传递律，对于某个循环构成要素的集合 <span style="font-family:serif;font-style:italic">C = {c<sub>1</sub>, c<sub>2</sub>, …, c<sub>n</sub>}</span>，对于任意的 k, l，通过循环始终能使得如下的对称律成立：<span style="font-family:serif;font-style:italic">c<sub>k</sub> ⟼ c<sub>l</sub> ⟹ c<sub>l</sub> ⟼ c<sub>k</sub></span>。作为价值表现而言虽无意义，但由于<span style="font-family:serif;font-style:italic">c<sub>k</sub> ⟼ c<sub>k</sub></span>也始终为真，因此循环构成要素的集合C满足自反律、对称律、传递律，构成了代数中所说的等价关系 <span style="font-family:serif;font-style:italic">c<sub>k</sub> ∽ c<sub>l</sub></span>。所以可以说，C中的任何要素都可以凭借相同的资格成为共同的等价物，也可以说，存在能以一代表全体的要素。</p>
+    <p>构成与集合C中某要素c相连的单根枝条的连接要素集合 <span style="font-family:serif;font-style:italic">B = {b<sub>1</sub>, b<sub>2</sub>, …, b<sub>k</sub>}</span>，通过传递律，对所有i=1, 2, …, k均有<span style="font-family:serif;font-style:italic">b<sub>i</sub> ⟼ c</span> 成立。即，所有循环连接要素的商品都会被直接等置于同一个等价物。</p>
     <p class="speaker">循环的构成要素与连接要素</p>
     <p>循环的构成要素具有等价关系，因此可以用其中任意一个要素来代表。如果把这个代表要素称为准一般等价物，那么商品集合就可以被分类为以与循环数量相等的准一般等价物为中心的枢纽（Hub）状表现系统。例如，如果在前例中将准一般等价物设定为1和3，就会形成如图3所示的两个表现系统。中心准一般等价物的位置可以由打上号的要素以对等的资格来担任。</p>
+    <div class="figure"><img src="image_fig3.png" alt="图3"><p class="figure-caption">图3：以准一般等价物为中心的两个表现系统</p></div>
+
     <p class="speaker">外力的要求</p>
     <p>到此为止的内容，可以概括如下：</p>
-    <p style="text-indent:0;padding-left:1.5em">· 价值表现通过等价物链，生成以循环为中心的、单一的或少数几个、互不重叠的表现系统。</p>
-    <p style="text-indent:0;padding-left:1.5em">· 循环构成要素的代表，无法仅凭生成表现系统的内在条件来演绎决定。</p>
-    <p style="text-indent:0;padding-left:1.5em">· 在产生多个表现系统的情况下，它们的统一，也无法仅凭生成表现系统的内在条件来演绎决定。</p>
+    <p class="bullet">价值表现通过等价物链，生成以循环为中心的、单一的或少数几个、互不重叠的表现系统。</p>
+    <p class="bullet">循环构成要素的代表，无法仅凭生成表现系统的内在条件来演绎决定。</p>
+    <p class="bullet">在产生多个表现系统的情况下，它们的统一，也无法仅凭生成表现系统的内在条件来演绎决定。</p>
     <p>由此可知，所有的商品若要拥有单一共同的等价物（即一般等价物），需要两种外部条件。其一是决定构成循环之等价类的代表的条件；其二是分化为多个表现系统时，将其统一起来的条件。通过这些，图3中的两个表现系统就能变成以一般等价物为中心的单一枢纽（Hub）结构。</p>
     <p>以上终究是在“所有的商品种都利用其他任意的商品种构成等价物，以表现自身价值”的设想下演绎出的结论。因此，如果对这一设想加以修改，结论也会随之有所改变。但是，只要不打破“商品具有价值（价值存在）且其价值由等价物来表现（价值表现）”这个大框架，“商品的价值表现具备缩小等价物范围的强劲内力，但一般等价物的生成还需要独特的外部力量”，这一基本命题便不会动摇。</p>
     <p class="section-label">5 变容的结构</p>
@@ -274,8 +301,8 @@ mark.anno-highlight:hover .anno-tooltip,.anno-tooltip:hover{opacity:1;pointer-ev
     <p>一听到“要求”这个词，就立刻先入为主地认定它是陈旧老套的逻辑，这本身也是一种陈旧的教条。真正重要的是，要正面直视“开口部”的存在，并充分运用演绎推理对其内部结构进行精密的分析。如果我们对“资本主义是会发生演变（变化）的”这一事实感兴趣，并试图从理论上把握其内在机制，自然就会走向这样的方法论。这就是“变容论的路径”。</p>
     <p class="speaker">填补开口部的方法</p>
     <p>迄今已明确的开口部内部结构可概括为以下问题群：</p>
-    <p style="text-indent:0;padding-left:1.5em">· 决定等价物构成法中的直接型或间接型（直接/间接问题）</p>
-    <p style="text-indent:0;padding-left:1.5em">· 形成一般等价物过程中的：</p>
+    <p class="bullet">决定等价物构成法中的直接型或间接型（直接/间接问题）</p>
+    <p class="bullet">形成一般等价物过程中的：</p>
     <p style="text-indent:0;padding-left:1.5em">(a) 循环构成要素的代表决定（代表问题）</p>
     <p style="text-indent:0;padding-left:1.5em">(b) 多个表现系统的单一化（统一问题）</p>
     <p>我们应当以怎样的步骤来解决这三个问题呢？需要先确认一下问题的结构。其中，“直接/间接问题”和“代表问题”只要是多种大量商品以任意商品作为等价物表现价值，就必然会产生，相对而言，“统一问题”则可发生也可不发生。在这一意义上，可将“直接/间接问题”和“代表问题”划分为“主要问题”，将“统一问题”划分为“次要问题”。关键在于，究竟应该先解决主要问题还是先解决次要问题。</p>
@@ -283,10 +310,10 @@ mark.anno-highlight:hover .anno-tooltip,.anno-tooltip:hover{opacity:1;pointer-ev
     <p>先解决次要问题再着手处理主要问题，这一步骤乍看之下似乎很合理，但稍加思索就会发现它有着重大缺陷。因为将可能会发生的问题置于优先，这就等同于将外部力量置于生成一般等价物的内部力量之上。在无数价值表现中，尽管看似不过是调换了一个等价物，但只要对形成循环的内力直接加以干涉，就会破坏一般等价物形成的内部条件。作用于开口部的外力，不应是这种由于直接介入造成的修正，而必须将其局限为：以内部力量所形成的分歧为前提，在外部对其选择方向进行辅助的作用。外在条件的追加，应在不影响内在条件的范围内进行。如果不严守这个规则，核心理论的基础会瞬间瓦解。基于上述理由，这里的考察步骤将是：首先解决主要问题，然后在依然遗留可能性的情况下去解决次要问题。</p>
     <p class="speaker">直接型·间接型与代表的决定</p>
     <p>解决主要问题的要点在于，“直接/间接问题”和“代表问题”这两者究竟是合为一体去解，还是各自独立去解？换言之，“直接/间接问题”顾名思义是直接型与间接型的二选一原理，那么代表问题中是否也能想到与之对应的不同的决定原理？从这一视角重新审视“循环构成要素与连接要素”一节中所规定的准一般等价物，可以发现，在其中依然能认出存在的两种方式。</p>
-    <p>其中一种是“择一型”方式，即从循环的构成要素集合 C={c1, c2,…, cn}中，抽取出任何一个要素来构成准一般等价物。另一种是“包容型”方式，它像百搭牌一样，能与集合C中任意要素被等置，借此构成准一般等价物。在择一型中，C的要素内会有n-1个通过准一般等价物进行价值表现；但在包容型中，C的所有n个要素都将通过该等价物e进行价值表现，故不会发生作为择一型特征的“将特定商品从商品集合中排除出去”的情况。图3左侧的表现系统，是将商品1作为准一般等价物的择一型，但在包容型中，中间会放置一个等价物e，{1, 4, 8} 所有要素都将借由这个准一般等价物来进行价值表现。</p>
+    <p>其中一种是“择一型”方式，即从循环的构成要素集合 <span style="font-family:serif;font-style:italic">C = {c<sub>1</sub>, c<sub>2</sub>, …, c<sub>n</sub>}</span>中，抽取出任何一个要素来构成准一般等价物。另一种是“包容型”方式，它像百搭牌一样，能与集合C中任意要素被等置，借此构成准一般等价物。在择一型中，C的要素内会有n-1个通过准一般等价物进行价值表现；但在包容型中，C的所有n个要素都将通过该等价物e进行价值表现，故不会发生作为择一型特征的“将特定商品从商品集合中排除出去”的情况。图3左侧的表现系统，是将商品1作为准一般等价物的择一型，但在包容型中，中间会放置一个等价物e，{1, 4, 8} 所有要素都将借由这个准一般等价物来进行价值表现。</p>
     <p>如果代表问题存在择一型和包容型这两种解答，便可以立刻明白它对应于“直接/间接问题”中的直接型和间接型。若将以特定商品为基础构成等价物的直接型运用到代表问题上，就变成了从循环中抽取出特定商品作为准一般等价物的择一型。若要构成能与多个商品均可等置的准一般等价物e，不可或缺的是一种包容性的债权债务证书——它不仅能以对应于c1的物来清偿，也能以对应于c2的物来清偿。以此，在准一般等价物的形成上，可以观察到“直接型+择一型”和“间接型+包容型”这两条分歧。</p>
     <p class="speaker">复数的表现系统</p>
-    <p>即使主要问题得以解决，依然有可能发生多个表现系统与多个准一般等价物并存的情况，这就留下了“它们究竟如何统一成单一的一般等价物？”的问题。对此，暂且可以构想如下解答。如同对商品集合A设想等价物的映射φ一样，对于由准一般等价物构成的集合E={e1, e2, …ek}，引入新的等价物映射φ。由于φ(E)的大小比φ(A)小，其内部发生多个循环的概率也会降低，反复进行此操作，该值将趋近于零。这就是统一问题形式解的候选方案。</p>
+    <p>即使主要问题得以解决，依然有可能发生多个表现系统与多个准一般等价物并存的情况，这就留下了“它们究竟如何统一成单一的一般等价物？”的问题。对此，暂且可以构想如下解答。如同对商品集合A设想等价物的映射φ一样，对于由准一般等价物构成的集合<span style="font-family:serif;font-style:italic">E = {e<sub>1</sub>, e<sub>2</sub>, …, e<sub>k</sub>}</span>，引入新的等价物映射φ。由于φ(E)的大小比φ(A)小，其内部发生多个循环的概率也会降低，反复进行此操作，该值将趋近于零。这就是统一问题形式解的候选方案。</p>
     <p>可是，实质性问题在于下述几点。如前所述，循环的数量，只需在映射φ中重新替换一处等价物，就会随之增减，是一种浮动状态。即便针对A的某个映射φ实现了表现系统的单一化，那也仅仅体现了在特定时刻共时性存在的一般等价物而已。假如在下一瞬间转为另一种映射φ’，那么在时间流逝的过程中，等价物链的模式将会像旋转万花筒般发生改变，循环数也将产生变动。</p>
     <p>可是，实际当中并未见到此种变化。共时性的分解照片的合成，并无法构成历时性的影像。因为只要一旦形成了一般等价物，出于下节所述的原因，它就会产生独特的持续性。在一般等价物的惯性压制下，多重表现系统统一的问题也就不会浮上水面。只不过在其水面之下，时刻潜伏着威胁一般等价物存在的、表现系统走向分裂的可能性。所以，假如对“直接/间接问题”和“代表问题”提供解决方法的外部条件产生动摇，这种分裂便会变成现实。统一问题的实质意义即在于此。</p>
     <p class="speaker">商品货币</p>
@@ -316,18 +343,7 @@ mark.anno-highlight:hover .anno-tooltip,.anno-tooltip:hover{opacity:1;pointer-ev
     <p>日高普[1974]《全订经济原论》，时潮社。</p>
     <p>海大汎[2021]《货币的原理·信用的原理》，社会评论社。</p>
     <p>山口重克[1985]《经济原论讲义》，东京大学出版会。</p>
-    <p>作者简介：小幡道昭（Michiaki Obata, 1950——），日本经济学家， 宇野学派第三代学者。主要研究领域为马克思主义经济学。东京大学名誉教授。</p>
-    <p>译文简介：本译文根据2023年4月《季刊经济理論》第60卷第1号翻译。</p>
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
+
   </div>
   <a href="#" class="back-top" onclick="window.scrollTo({top:0});return false;"><span data-i18n="a_backtop">↑ 返回顶部</span></a>
 </article>
@@ -464,6 +480,7 @@ document.addEventListener("mouseup",function(e){
   var fl=document.getElementById("annoFloat");
   if(e.target.closest&&e.target.closest(".anno-popup,.anno-float,.anno-tooltip"))return;
   // Show popup for everyone, check login on action
+  if(e.target.closest&&e.target.closest(".anno-tooltip,.reply-input"))return;
   var sel=window.getSelection();
   if(!sel||sel.isCollapsed||!sel.toString().trim()){popup.classList.remove("show");return}
   var node=sel.anchorNode;var inBody=false;
@@ -515,24 +532,11 @@ function showFloatAt(mark){
 }
 
 document.getElementById("annoCancelBtn").addEventListener("click",function(){
-  var fl=document.getElementById("annoFloat");fl.classList.remove("show");fl.removeAttribute("data-reply-to");selRange=null;
+  document.getElementById("annoFloat").classList.remove("show");selRange=null;
 });
 
 document.getElementById("annoSaveBtn").addEventListener("click",function(){
   var comment=document.getElementById("annoText").value.trim();
-  var fl=document.getElementById("annoFloat");
-  var replyTo=fl.getAttribute("data-reply-to");
-  if(replyTo){
-    if(!comment)return;
-    var target=annos.find(function(a){return a.id===replyTo});
-    if(target){
-      if(!target.replies)target.replies=[];
-      target.replies.push({author:localStorage.getItem("user_name"),text:comment});
-      annosRef.child(target.id).update({replies:target.replies});
-    }
-    fl.classList.remove("show");fl.removeAttribute("data-reply-to");
-    window.getSelection().removeAllRanges();renderAnnoSidebar();return;
-  }
   if(!comment||!selRange)return;
   var quote=selRange.toString().trim();
   var userName=localStorage.getItem("user_name")||"Anonymous";

@@ -26,7 +26,7 @@ nav .left{display:flex;align-items:center;gap:.75rem}
 nav .back{width:30px;height:30px;border-radius:50%;border:1px solid var(--line);display:flex;align-items:center;justify-content:center;transition:all .3s}
 nav .back:hover{border-color:var(--ink-soft);background:var(--cream-dark)}
 nav .back svg{width:14px;height:14px;color:var(--ink-soft)}
-.nav-user{display:flex;align-items:center;gap:.5rem;flex-direction:row}.nav-user-avatar{width:26px;height:26px;border-radius:50%;background:var(--line);overflow:hidden;display:flex;align-items:center;justify-content:center;font-size:.6rem;font-weight:600;color:var(--ink-soft);flex-shrink:0}.nav-user-avatar img{width:100%;height:100%;object-fit:cover}.nav-user-name{font-size:.72rem;color:var(--ink-soft);white-space:nowrap}
+.nav-user{display:flex;align-items:center;gap:.5rem;flex-direction:row;flex-wrap:nowrap}.nav-user-avatar{width:26px;height:26px;border-radius:50%;background:var(--line);overflow:hidden;display:flex;align-items:center;justify-content:center;font-size:.6rem;font-weight:600;color:var(--ink-soft);flex-shrink:0}.nav-user-avatar img{width:100%;height:100%;object-fit:cover}.nav-user-name{font-size:.72rem;color:var(--ink-soft);white-space:nowrap;font-family:var(--serif);font-variation-settings:"opsz" 20;letter-spacing:.02em}
 
 /* HEADER */
 .page-header{padding:8rem var(--gutter) 3rem;max-width:var(--max);margin:0 auto;position:relative;z-index:2}
@@ -95,7 +95,7 @@ mark.hl-only{background:color-mix(in srgb,var(--sage) 22%,transparent);border-bo
 mark.anno-highlight{background:color-mix(in srgb,var(--ochre) 25%,transparent);border-bottom:2px solid var(--ochre);cursor:pointer;padding:0 1px;border-radius:2px;position:relative}
 .anno-tooltip{position:absolute;bottom:calc(100% + 8px);left:50%;transform:translateX(-50%);background:color-mix(in srgb,var(--ink) 88%,transparent);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);color:var(--cream);padding:.75rem 1rem;border-radius:8px;font-family:var(--sans);font-size:.82rem;line-height:1.6;max-width:400px;min-width:220px;width:max-content;white-space:normal;z-index:50;pointer-events:none;opacity:0;transition:opacity .2s;box-shadow:0 4px 12px color-mix(in srgb,var(--ink) 20%,transparent)}
 .anno-tooltip::after{content:"";position:absolute;top:100%;left:50%;transform:translateX(-50%);border:5px solid transparent;border-top-color:var(--ink)}
-mark.anno-highlight:hover .anno-tooltip,.anno-tooltip:hover{opacity:1;pointer-events:auto}
+mark.anno-highlight:hover .anno-tooltip,.anno-tooltip:hover,.anno-tooltip:focus-within{opacity:1;pointer-events:auto}
 .anno-tooltip .reply-list{margin-top:.4rem;border-top:1px solid color-mix(in srgb,var(--cream) 15%,transparent);padding-top:.4rem}
 .anno-tooltip .reply-item{font-size:.65rem;margin-top:.3rem;padding-left:.5rem;border-left:2px solid var(--terracotta)}
 .anno-tooltip .reply-item .ra{color:var(--terracotta);font-weight:600}
@@ -438,6 +438,7 @@ document.addEventListener("mouseup",function(e){
   var fl=document.getElementById("annoFloat");
   if(e.target.closest&&e.target.closest(".anno-popup,.anno-float,.anno-tooltip"))return;
   // Show popup for everyone, check login on action
+  if(e.target.closest&&e.target.closest(".anno-tooltip,.reply-input"))return;
   var sel=window.getSelection();
   if(!sel||sel.isCollapsed||!sel.toString().trim()){popup.classList.remove("show");return}
   var node=sel.anchorNode;var inBody=false;
@@ -489,24 +490,11 @@ function showFloatAt(mark){
 }
 
 document.getElementById("annoCancelBtn").addEventListener("click",function(){
-  var fl=document.getElementById("annoFloat");fl.classList.remove("show");fl.removeAttribute("data-reply-to");selRange=null;
+  document.getElementById("annoFloat").classList.remove("show");selRange=null;
 });
 
 document.getElementById("annoSaveBtn").addEventListener("click",function(){
   var comment=document.getElementById("annoText").value.trim();
-  var fl=document.getElementById("annoFloat");
-  var replyTo=fl.getAttribute("data-reply-to");
-  if(replyTo){
-    if(!comment)return;
-    var target=annos.find(function(a){return a.id===replyTo});
-    if(target){
-      if(!target.replies)target.replies=[];
-      target.replies.push({author:localStorage.getItem("user_name"),text:comment});
-      annosRef.child(target.id).update({replies:target.replies});
-    }
-    fl.classList.remove("show");fl.removeAttribute("data-reply-to");
-    window.getSelection().removeAllRanges();renderAnnoSidebar();return;
-  }
   if(!comment||!selRange)return;
   var quote=selRange.toString().trim();
   var userName=localStorage.getItem("user_name")||"Anonymous";
