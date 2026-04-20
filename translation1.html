@@ -106,9 +106,10 @@ footer{padding:2rem var(--gutter);border-top:1px solid var(--line);font-size:.75
 .anno-float .anno-save:hover{background:var(--terracotta)}
 mark.hl-only{background:color-mix(in srgb,var(--sage) 22%,transparent);border-bottom:2px solid var(--sage);padding:0 1px;border-radius:2px;cursor:pointer}
 mark.anno-highlight{background:color-mix(in srgb,var(--ochre) 25%,transparent);border-bottom:2px solid var(--ochre);cursor:pointer;padding:0 1px;border-radius:2px;position:relative}
-.anno-tooltip{position:absolute;bottom:calc(100% + 8px);left:50%;transform:translateX(-50%);background:color-mix(in srgb,var(--ink) 88%,transparent);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);color:var(--cream);padding:.75rem 1rem;border-radius:8px;font-family:var(--sans);font-size:.82rem;line-height:1.6;max-width:400px;min-width:220px;width:max-content;white-space:normal;z-index:50;pointer-events:none;opacity:0;transition:opacity .2s;box-shadow:0 4px 12px color-mix(in srgb,var(--ink) 20%,transparent)}
-.anno-tooltip::after{content:"";position:absolute;top:100%;left:50%;transform:translateX(-50%);border:5px solid transparent;border-top-color:var(--ink)}
-mark.anno-highlight:hover .anno-tooltip,.anno-tooltip:hover,.anno-tooltip:focus-within{opacity:1;pointer-events:auto}
+.anno-tooltip{position:absolute;bottom:calc(100% + 8px);left:0;transform:none;background:color-mix(in srgb,var(--ink) 90%,transparent);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);color:var(--cream);padding:.75rem 1rem;border-radius:8px;font-family:var(--sans);font-size:.82rem;line-height:1.6;max-width:400px;min-width:220px;width:max-content;white-space:normal;z-index:50;pointer-events:none;opacity:0;transition:opacity .2s;box-shadow:0 4px 12px color-mix(in srgb,var(--ink) 20%,transparent)}
+.anno-tooltip::after{content:"";position:absolute;top:100%;left:1.5rem;border:5px solid transparent;border-top-color:var(--ink)}
+mark.anno-highlight .anno-tooltip.visible{opacity:1;pointer-events:auto}
+.anno-tooltip.visible .reply-input{pointer-events:auto}
 .anno-tooltip .reply-list{margin-top:.4rem;border-top:1px solid color-mix(in srgb,var(--cream) 15%,transparent);padding-top:.4rem}
 .anno-tooltip .reply-item{font-size:.65rem;margin-top:.3rem;padding-left:.5rem;border-left:2px solid var(--terracotta)}
 .anno-tooltip .reply-item .ra{color:var(--terracotta);font-weight:600}
@@ -456,7 +457,7 @@ function findAndWrap(root,searchText,anno){
       mark.setAttribute("data-anno-id",anno.id);
       range.surroundContents(mark);
       if(anno.type!=="highlight"&&anno.comment){rebuildTooltip(mark,anno)}
-      mark.addEventListener("click",function(){showFloatAt(this)});
+      
       return true;
     }catch(e){return false}
   }
@@ -503,7 +504,7 @@ document.getElementById("hlBtn").addEventListener("click",function(){
   var newAnno={quote:q,comment:"",author:localStorage.getItem("user_name")||"",articleId:"",date:new Date().toLocaleDateString("zh-CN"),type:"highlight",replies:[]};
   var newRef=annosRef.push(newAnno);
   mark.setAttribute("data-anno-id",newRef.key);
-  mark.addEventListener("click",function(){showFloatAt(mark)});
+  
   }catch(e){}
   selRange=null;window.getSelection().removeAllRanges();renderAnnoSidebar();
 });
@@ -524,12 +525,7 @@ function showFloat(top,left){
   fl.classList.add("show");
   document.getElementById("annoText").focus();
 }
-function showFloatAt(mark){
-  if(!localStorage.getItem("user_name")){showLoginPrompt();return}
-  var rect=mark.getBoundingClientRect();
-  selRange=document.createRange();selRange.selectNodeContents(mark);
-  showFloat(rect.bottom+window.scrollY+6,Math.max(8,rect.left+window.scrollX));
-}
+
 
 document.getElementById("annoCancelBtn").addEventListener("click",function(){
   document.getElementById("annoFloat").classList.remove("show");selRange=null;
@@ -558,7 +554,7 @@ document.getElementById("annoSaveBtn").addEventListener("click",function(){
     mark.setAttribute("data-anno-id",newRef.key);
     selRange.surroundContents(mark);
     rebuildTooltip(mark,annos[annos.length-1]);
-    mark.addEventListener("click",function(){showFloatAt(mark)});
+    
     }catch(e){}
   }
   selRange=null;document.getElementById("annoFloat").classList.remove("show");
@@ -573,6 +569,11 @@ function rebuildTooltip(mark,anno){
   anno.replies.forEach(function(r){html+='<div class="reply-item"><span class="ra">'+r.author+":</span> "+r.text+"</div>"});html+="</div>"}
   var LL=getAnnoLang();var curUser=localStorage.getItem("user_name")||"";html+='<button class="reply-btn" data-id="'+anno.id+'">'+LL.reply+'</button>';if(curUser&&curUser===anno.author){html+=' <button class="del-btn" data-id="'+anno.id+'">'+LL.del+'</button>'}
   tip.innerHTML=html;mark.appendChild(tip);
+  mark.addEventListener("click",function(e){
+    e.stopPropagation();e.preventDefault();
+    document.querySelectorAll(".anno-tooltip.visible").forEach(function(t){if(t!==tip)t.classList.remove("visible")});
+    tip.classList.toggle("visible");
+  });
   var delBtn=tip.querySelector(".del-btn");if(delBtn)delBtn.addEventListener("click",function(e){
     e.stopPropagation();
     var did=this.getAttribute("data-id");
@@ -641,7 +642,7 @@ renderAnnoSidebar();
 
 // Sidebar toggle (end of script)
 document.getElementById("annoToggle").onclick=function(){document.getElementById("annoSidebar").classList.toggle("open")};
-document.addEventListener("click",function(e){var sb=document.getElementById("annoSidebar");var tg=document.getElementById("annoToggle");if(sb.classList.contains("open")&&!sb.contains(e.target)&&!tg.contains(e.target)){sb.classList.remove("open")}});
+document.addEventListener("click",function(e){document.querySelectorAll(".anno-tooltip.visible").forEach(function(t){if(!t.contains(e.target)&&!t.parentElement.contains(e.target))t.classList.remove("visible")});var sb=document.getElementById("annoSidebar");var tg=document.getElementById("annoToggle");if(sb.classList.contains("open")&&!sb.contains(e.target)&&!tg.contains(e.target)){sb.classList.remove("open")}});
 document.getElementById("closeSidebar").onclick=function(){document.getElementById("annoSidebar").classList.remove("open")};
 </script>
 </body>
