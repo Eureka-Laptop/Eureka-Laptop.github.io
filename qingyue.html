@@ -26,7 +26,7 @@ nav .left{display:flex;align-items:center;gap:.75rem}
 nav .back{width:30px;height:30px;border-radius:50%;border:1px solid var(--line);display:flex;align-items:center;justify-content:center;transition:all .3s}
 nav .back:hover{border-color:var(--ink-soft);background:var(--cream-dark)}
 nav .back svg{width:14px;height:14px;color:var(--ink-soft)}
-.nav-user{display:flex;align-items:center;gap:.5rem}.nav-user-avatar{width:24px;height:24px;border-radius:50%;background:var(--line);overflow:hidden;display:flex;align-items:center;justify-content:center;font-size:.6rem;font-weight:600;color:var(--ink-soft)}.nav-user-avatar img{width:100%;height:100%;object-fit:cover}.nav-user-name{font-size:.75rem;color:var(--ink-soft)}
+.nav-user{display:flex;align-items:center;gap:.5rem;flex-direction:row}.nav-user-avatar{width:26px;height:26px;border-radius:50%;background:var(--line);overflow:hidden;display:flex;align-items:center;justify-content:center;font-size:.6rem;font-weight:600;color:var(--ink-soft);flex-shrink:0}.nav-user-avatar img{width:100%;height:100%;object-fit:cover}.nav-user-name{font-size:.72rem;color:var(--ink-soft);white-space:nowrap}
 
 /* HEADER */
 .page-header{padding:8rem var(--gutter) 3rem;max-width:var(--max);margin:0 auto;position:relative;z-index:2}
@@ -93,9 +93,9 @@ footer{padding:2rem var(--gutter);border-top:1px solid var(--line);font-size:.75
 .anno-float .anno-save:hover{background:var(--terracotta)}
 mark.hl-only{background:color-mix(in srgb,var(--sage) 22%,transparent);border-bottom:2px solid var(--sage);padding:0 1px;border-radius:2px;cursor:pointer}
 mark.anno-highlight{background:color-mix(in srgb,var(--ochre) 25%,transparent);border-bottom:2px solid var(--ochre);cursor:pointer;padding:0 1px;border-radius:2px;position:relative}
-.anno-tooltip{position:absolute;bottom:calc(100% + 8px);left:50%;transform:translateX(-50%);background:color-mix(in srgb,var(--ink) 88%,transparent);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);color:var(--cream);padding:.75rem 1rem;border-radius:8px;font-family:var(--sans);font-size:.78rem;line-height:1.5;max-width:360px;min-width:180px;white-space:normal;z-index:50;pointer-events:none;opacity:0;transition:opacity .2s;box-shadow:0 4px 12px color-mix(in srgb,var(--ink) 20%,transparent)}
+.anno-tooltip{position:absolute;bottom:calc(100% + 8px);left:50%;transform:translateX(-50%);background:color-mix(in srgb,var(--ink) 88%,transparent);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);color:var(--cream);padding:.75rem 1rem;border-radius:8px;font-family:var(--sans);font-size:.82rem;line-height:1.6;max-width:400px;min-width:220px;width:max-content;white-space:normal;z-index:50;pointer-events:none;opacity:0;transition:opacity .2s;box-shadow:0 4px 12px color-mix(in srgb,var(--ink) 20%,transparent)}
 .anno-tooltip::after{content:"";position:absolute;top:100%;left:50%;transform:translateX(-50%);border:5px solid transparent;border-top-color:var(--ink)}
-mark.anno-highlight:hover .anno-tooltip{opacity:1;pointer-events:auto}
+mark.anno-highlight:hover .anno-tooltip,.anno-tooltip:hover{opacity:1;pointer-events:auto}
 .anno-tooltip .reply-list{margin-top:.4rem;border-top:1px solid color-mix(in srgb,var(--cream) 15%,transparent);padding-top:.4rem}
 .anno-tooltip .reply-item{font-size:.65rem;margin-top:.3rem;padding-left:.5rem;border-left:2px solid var(--terracotta)}
 .anno-tooltip .reply-item .ra{color:var(--terracotta);font-weight:600}
@@ -105,7 +105,7 @@ mark.anno-highlight:hover .anno-tooltip{opacity:1;pointer-events:auto}
 .reply-input button{background:var(--terracotta);color:var(--cream);border:none;border-radius:4px;padding:.2rem .4rem;font-size:.6rem;cursor:pointer}
 .anno-tooltip .del-btn{background:none;border:none;color:color-mix(in srgb,var(--cream) 50%,transparent);font-size:.6rem;cursor:pointer;text-decoration:underline;margin-top:.3rem;padding:0}
 .anno-tooltip .del-btn:hover{color:var(--cream)}
-.anno-tooltip .anno-author{color:var(--terracotta);font-weight:600;margin-bottom:.2rem;display:block;font-size:.65rem;letter-spacing:.06em}
+.anno-tooltip .anno-author{color:var(--terracotta);font-weight:600;margin-bottom:.35rem;display:block;font-size:.7rem;letter-spacing:.04em;padding-bottom:.25rem;border-bottom:1px solid color-mix(in srgb,var(--cream) 15%,transparent)}
 .anno-sidebar{position:fixed;right:0;top:0;bottom:0;width:320px;background:var(--cream);border-left:1px solid var(--line);z-index:160;transform:translateX(100%);transition:transform .3s ease;overflow-y:auto;padding:2rem 1.5rem}
 .anno-sidebar.open{transform:none}
 .anno-sidebar h3{font-family:var(--serif);font-size:1.1rem;font-weight:400;margin-bottom:1.5rem;display:flex;justify-content:space-between;align-items:center}
@@ -120,6 +120,12 @@ mark.anno-highlight:hover .anno-tooltip{opacity:1;pointer-events:auto}
 .anno-toggle{position:fixed;right:1.5rem;bottom:2rem;width:44px;height:44px;border-radius:50%;background:var(--ink);color:var(--cream);border:none;cursor:pointer;z-index:155;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 12px color-mix(in srgb,var(--ink) 20%,transparent);transition:background .2s;font-size:1rem}
 .anno-toggle:hover{background:var(--terracotta)}
 .anno-toggle svg{pointer-events:none}
+.login-prompt{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);z-index:250;background:var(--cream);border:1px solid var(--line);border-radius:10px;padding:1.5rem 2rem;text-align:center;box-shadow:0 12px 40px color-mix(in srgb,var(--ink) 15%,transparent);animation:popIn .25s ease;font-family:var(--sans)}
+.login-prompt-bg{position:fixed;inset:0;z-index:249;background:color-mix(in srgb,var(--ink) 25%,transparent);backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px)}
+.login-prompt p{font-size:.9rem;color:var(--ink);margin-bottom:1rem}
+.login-prompt a{display:inline-block;padding:.45rem 1.2rem;background:var(--ink);color:var(--cream);border-radius:100px;font-size:.8rem;text-decoration:none;transition:background .2s}
+.login-prompt a:hover{background:var(--terracotta)}
+.login-prompt .dismiss{background:none;border:none;color:var(--ink-soft);font-size:.75rem;cursor:pointer;margin-top:.6rem;display:block;margin-left:auto;margin-right:auto}
 </style>
 </head>
 <body>
@@ -195,7 +201,7 @@ mark.anno-highlight:hover .anno-tooltip{opacity:1;pointer-events:auto}
     <p>最后，会议对英国国家机器（如工厂法制定与工厂视察员制度）在缓和阶级矛盾中的宏观角色作了延伸探讨。与会学者一致认同，马克思在《资本论》第一卷的纯粹理论推演中虽依据科学抽象法暂时舍象了具体的国家干预变量，但他对资本主义社会的现实阶级斗争动态依然保持着极其敏锐且全面的洞察。</p>
   </div>
 
-  <a href="#" class="back-top" onclick="window.scrollTo({top:0});return false;">↑ 返回目录顶部</a>
+  <a href="#" class="back-top" onclick="window.scrollTo({top:0});return false;"><span data-i18n="a_backtop">↑ 返回目录顶部</span></a>
 </article>
 
 <!-- ============ 第38期 ============ -->
@@ -241,7 +247,7 @@ mark.anno-highlight:hover .anno-tooltip{opacity:1;pointer-events:auto}
     <p>围绕“若原料涨价，单个资本家是否通过不变资本实现了价值增殖”这一迷思，与会同学展开了学术讨论。于雨桐认为，低价购入原料而在涨价后售出产品的投机模式，也是资本家直接利用不变资本进行资本增殖的方式。刘瑜指出，这种基于时间差的“溢价”纯粹源于流通领域的市场供求变化，属于全社会既有总价值的重新分配。在马克思的政治经济学语境下，资本的真实增殖必须发生于生产过程内部，不变资本绝不具备创造剩余价值的属性，流通领域的投机获利不能颠覆可变资本作为唯一价值增殖源泉的铁律。</p>
   </div>
 
-  <a href="#" class="back-top" onclick="window.scrollTo({top:0});return false;">↑ 返回目录顶部</a>
+  <a href="#" class="back-top" onclick="window.scrollTo({top:0});return false;"><span data-i18n="a_backtop">↑ 返回目录顶部</span></a>
 </article>
 
 <!-- ============ 第37期 ============ -->
@@ -297,7 +303,7 @@ mark.anno-highlight:hover .anno-tooltip{opacity:1;pointer-events:auto}
     <p>最终，落脚于“劳动从属于资本”的当代进路，朱梓熙提出，社会主义超越资本主义的本质，并非导向去技术化或退隐式的“去增长”，而是应当在扬弃劳动对资本实际从属的基础上，谋求自然要素、社会协作与机器体系在劳动过程内部的“新综合”，以此冲破旧有的资本主义劳动体系的桎梏。</p>
   </div>
 
-  <a href="#" class="back-top" onclick="window.scrollTo({top:0});return false;">↑ 返回目录顶部</a>
+  <a href="#" class="back-top" onclick="window.scrollTo({top:0});return false;"><span data-i18n="a_backtop">↑ 返回目录顶部</span></a>
 </article>
 
 <!-- Annotation UI -->
@@ -338,13 +344,13 @@ function renderNavUser(){
     var avHtml=a?'<img src="'+a+'" alt="">':ini;
     nu.innerHTML='<span class="nav-user-avatar">'+avHtml+'</span><span class="nav-user-name">'+n+'</span>';
   }else{
-    nu.innerHTML='<a href="index.html" style="font-size:.75rem;color:var(--ink-soft)">Sign in</a>';
+    var NL=getAnnoLang();nu.innerHTML='<a href="index.html" style="font-size:.75rem;color:var(--ink-soft)">'+NL.nav_signin+'</a>';
   }
 }
 renderNavUser();
 
 // Language sync
-var QT={"zh-CN":{back_projects:"返回项目",qy_badge:"长期项目 · 2025.09 –",qy_toc:"目录",a_hl:"― 划线",a_an:"✍ 批注",a_cancel:"取消",a_save:"保存",a_title:"批注",a_placeholder:"写下你的想法...",a_empty:"暂无批注",a_reply:"回复",a_delete:"删除",a_send:"发送",a_reply_ph:"回复...",a_highlight:"[划线]",a_annotation:"[批注]"},"zh-TW":{back_projects:"返回項目",qy_badge:"長期項目 · 2025.09 –",qy_toc:"目錄",a_hl:"― 劃線",a_an:"✍ 批註",a_cancel:"取消",a_save:"保存",a_title:"批註",a_placeholder:"寫下你的想法...",a_empty:"暫無批註",a_reply:"回覆",a_delete:"刪除",a_send:"發送",a_reply_ph:"回覆...",a_highlight:"[劃線]",a_annotation:"[批註]"},en:{back_projects:"Back to Projects",qy_badge:"Long-term · 2025.09 –",qy_toc:"Contents",a_hl:"― Highlight",a_an:"✍ Annotate",a_cancel:"Cancel",a_save:"Save",a_title:"Annotations",a_placeholder:"Write your thoughts...",a_empty:"No annotations yet",a_reply:"Reply",a_delete:"Delete",a_send:"Send",a_reply_ph:"Reply...",a_highlight:"[Highlight]",a_annotation:"[Annotation]"},de:{back_projects:"Zurück zu Projekte",qy_badge:"Langfristig · 2025.09 –",qy_toc:"Inhaltsverzeichnis",a_hl:"― Markieren",a_an:"✍ Anmerken",a_cancel:"Abbrechen",a_save:"Speichern",a_title:"Anmerkungen",a_placeholder:"Schreiben Sie Ihre Gedanken...",a_empty:"Noch keine Anmerkungen",a_reply:"Antworten",a_delete:"Löschen",a_send:"Senden",a_reply_ph:"Antworten...",a_highlight:"[Markierung]",a_annotation:"[Anmerkung]"},fr:{back_projects:"Retour aux Projets",qy_badge:"Long terme · 2025.09 –",qy_toc:"Sommaire",a_hl:"― Surligner",a_an:"✍ Annoter",a_cancel:"Annuler",a_save:"Enregistrer",a_title:"Annotations",a_placeholder:"Écrivez vos pensées...",a_empty:"Aucune annotation",a_reply:"Répondre",a_delete:"Supprimer",a_send:"Envoyer",a_reply_ph:"Répondre...",a_highlight:"[Surlignage]",a_annotation:"[Annotation]"},ja:{back_projects:"プロジェクトに戻る",qy_badge:"長期 · 2025.09 –",qy_toc:"目次",a_hl:"― ハイライト",a_an:"✍ 注釈",a_cancel:"キャンセル",a_save:"保存",a_title:"注釈",a_placeholder:"考えを書いてください...",a_empty:"注釈はまだありません",a_reply:"返信",a_delete:"削除",a_send:"送信",a_reply_ph:"返信...",a_highlight:"[ハイライト]",a_annotation:"[注釈]"}};
+var QT={"zh-CN":{back_projects:"返回项目",a_backtop:"↑ 返回目录顶部",qy_badge:"长期项目 · 2025.09 –",qy_toc:"目录",a_hl:"― 划线",a_an:"✍ 批注",a_cancel:"取消",a_save:"保存",a_title:"批注",a_placeholder:"写下你的想法...",a_empty:"暂无批注",a_reply:"回复",a_delete:"删除",a_send:"发送",a_reply_ph:"回复...",a_highlight:"[划线]",a_annotation:"[批注]"},"zh-TW":{back_projects:"返回項目",a_backtop:"↑ 返回目錄頂部",qy_badge:"長期項目 · 2025.09 –",qy_toc:"目錄",a_hl:"― 劃線",a_an:"✍ 批註",a_cancel:"取消",a_save:"保存",a_title:"批註",a_placeholder:"寫下你的想法...",a_empty:"暫無批註",a_reply:"回覆",a_delete:"刪除",a_send:"發送",a_reply_ph:"回覆...",a_highlight:"[劃線]",a_annotation:"[批註]"},en:{back_projects:"Back to Projects",a_backtop:"↑ Back to top",qy_badge:"Long-term · 2025.09 –",qy_toc:"Contents",a_hl:"― Highlight",a_an:"✍ Annotate",a_cancel:"Cancel",a_save:"Save",a_title:"Annotations",a_placeholder:"Write your thoughts...",a_empty:"No annotations yet",a_reply:"Reply",a_delete:"Delete",a_send:"Send",a_reply_ph:"Reply...",a_highlight:"[Highlight]",a_annotation:"[Annotation]"},de:{back_projects:"Zurück zu Projekte",a_backtop:"↑ Nach oben",qy_badge:"Langfristig · 2025.09 –",qy_toc:"Inhaltsverzeichnis",a_hl:"― Markieren",a_an:"✍ Anmerken",a_cancel:"Abbrechen",a_save:"Speichern",a_title:"Anmerkungen",a_placeholder:"Schreiben Sie Ihre Gedanken...",a_empty:"Noch keine Anmerkungen",a_reply:"Antworten",a_delete:"Löschen",a_send:"Senden",a_reply_ph:"Antworten...",a_highlight:"[Markierung]",a_annotation:"[Anmerkung]"},fr:{back_projects:"Retour aux Projets",a_backtop:"↑ Haut de page",qy_badge:"Long terme · 2025.09 –",qy_toc:"Sommaire",a_hl:"― Surligner",a_an:"✍ Annoter",a_cancel:"Annuler",a_save:"Enregistrer",a_title:"Annotations",a_placeholder:"Écrivez vos pensées...",a_empty:"Aucune annotation",a_reply:"Répondre",a_delete:"Supprimer",a_send:"Envoyer",a_reply_ph:"Répondre...",a_highlight:"[Surlignage]",a_annotation:"[Annotation]"},ja:{back_projects:"プロジェクトに戻る",a_backtop:"↑ トップに戻る",qy_badge:"長期 · 2025.09 –",qy_toc:"目次",a_hl:"― ハイライト",a_an:"✍ 注釈",a_cancel:"キャンセル",a_save:"保存",a_title:"注釈",a_placeholder:"考えを書いてください...",a_empty:"注釈はまだありません",a_reply:"返信",a_delete:"削除",a_send:"送信",a_reply_ph:"返信...",a_highlight:"[ハイライト]",a_annotation:"[注釈]"}};
 try{var sl=localStorage.getItem("lang");if(sl&&QT[sl]){var d=QT[sl];document.querySelectorAll("[data-i18n]").forEach(function(el){var k=el.getAttribute("data-i18n");if(d[k]!==undefined)el.textContent=d[k]});document.querySelectorAll("[data-i18n-ph]").forEach(function(el){var k=el.getAttribute("data-i18n-ph");if(d[k]!==undefined)el.placeholder=d[k]});document.documentElement.lang=sl}}catch(e){}
 
 // Reveal animation
@@ -416,11 +422,22 @@ function findAndWrap(root,searchText,anno){
 }
 var selRange=null;
 
+function showLoginPrompt(){
+  var L=getAnnoLang();
+  var bg=document.createElement("div");bg.className="login-prompt-bg";
+  var box=document.createElement("div");box.className="login-prompt";
+  box.innerHTML='<p>'+L.login_msg+'</p><a href="index.html">'+L.login_btn+'</a><button class="dismiss">'+L.login_dismiss+'</button>';
+  document.body.appendChild(bg);document.body.appendChild(box);
+  function close(){bg.remove();box.remove()}
+  bg.addEventListener("click",close);
+  box.querySelector(".dismiss").addEventListener("click",close);
+}
+
 document.addEventListener("mouseup",function(e){
   var popup=document.getElementById("annoPopup");
   var fl=document.getElementById("annoFloat");
   if(e.target.closest&&e.target.closest(".anno-popup,.anno-float,.anno-tooltip"))return;
-  if(!localStorage.getItem("user_name")){popup.classList.remove("show");return}
+  // Show popup for everyone, check login on action
   var sel=window.getSelection();
   if(!sel||sel.isCollapsed||!sel.toString().trim()){popup.classList.remove("show");return}
   var node=sel.anchorNode;var inBody=false;
@@ -436,6 +453,7 @@ document.addEventListener("mouseup",function(e){
 // Highlight only
 document.getElementById("hlBtn").addEventListener("click",function(){
   document.getElementById("annoPopup").classList.remove("show");
+  if(!localStorage.getItem("user_name")){showLoginPrompt();return}
   if(!selRange)return;
   try{var mark=document.createElement("mark");mark.className="hl-only";selRange.surroundContents(mark);
   var q=mark.textContent.substring(0,200);
@@ -450,6 +468,7 @@ document.getElementById("hlBtn").addEventListener("click",function(){
 // Annotate
 document.getElementById("annoBtn").addEventListener("click",function(){
   document.getElementById("annoPopup").classList.remove("show");
+  if(!localStorage.getItem("user_name")){showLoginPrompt();return}
   if(!selRange)return;
   var rect=selRange.getBoundingClientRect();
   showFloat(rect.bottom+window.scrollY+6,Math.max(8,Math.min(rect.left+window.scrollX,window.innerWidth-350)));
@@ -463,18 +482,31 @@ function showFloat(top,left){
   document.getElementById("annoText").focus();
 }
 function showFloatAt(mark){
-  if(!localStorage.getItem("user_name"))return;
+  if(!localStorage.getItem("user_name")){showLoginPrompt();return}
   var rect=mark.getBoundingClientRect();
   selRange=document.createRange();selRange.selectNodeContents(mark);
   showFloat(rect.bottom+window.scrollY+6,Math.max(8,rect.left+window.scrollX));
 }
 
 document.getElementById("annoCancelBtn").addEventListener("click",function(){
-  document.getElementById("annoFloat").classList.remove("show");selRange=null;
+  var fl=document.getElementById("annoFloat");fl.classList.remove("show");fl.removeAttribute("data-reply-to");selRange=null;
 });
 
 document.getElementById("annoSaveBtn").addEventListener("click",function(){
   var comment=document.getElementById("annoText").value.trim();
+  var fl=document.getElementById("annoFloat");
+  var replyTo=fl.getAttribute("data-reply-to");
+  if(replyTo){
+    if(!comment)return;
+    var target=annos.find(function(a){return a.id===replyTo});
+    if(target){
+      if(!target.replies)target.replies=[];
+      target.replies.push({author:localStorage.getItem("user_name"),text:comment});
+      annosRef.child(target.id).update({replies:target.replies});
+    }
+    fl.classList.remove("show");fl.removeAttribute("data-reply-to");
+    window.getSelection().removeAllRanges();renderAnnoSidebar();return;
+  }
   if(!comment||!selRange)return;
   var quote=selRange.toString().trim();
   var userName=localStorage.getItem("user_name")||"Anonymous";
@@ -539,12 +571,12 @@ function rebuildTooltip(mark,anno){
 
 function getAnnoLang(){
   var sl=localStorage.getItem("lang")||"zh-CN";
-  var m={"zh-CN":{empty:"暂无批注",hl:"[划线]",an:"[批注]",del:"删除",reply:"回复",send:"发送",rph:"回复..."},
-  "zh-TW":{empty:"暫無批註",hl:"[劃線]",an:"[批註]",del:"刪除",reply:"回覆",send:"發送",rph:"回覆..."},
-  en:{empty:"No annotations yet",hl:"[Highlight]",an:"[Annotation]",del:"Delete",reply:"Reply",send:"Send",rph:"Reply..."},
-  de:{empty:"Noch keine Anmerkungen",hl:"[Markierung]",an:"[Anmerkung]",del:"L\u00f6schen",reply:"Antworten",send:"Senden",rph:"Antworten..."},
-  fr:{empty:"Aucune annotation",hl:"[Surlignage]",an:"[Annotation]",del:"Supprimer",reply:"R\u00e9pondre",send:"Envoyer",rph:"R\u00e9pondre..."},
-  ja:{empty:"注釈はまだありません",hl:"[ハイライト]",an:"[注釈]",del:"削除",reply:"返信",send:"送信",rph:"返信..."}};
+  var m={"zh-CN":{empty:"暂无批注",login_msg:"请先登录后再操作",login_btn:"前往登录",login_dismiss:"稍后再说",nav_signin:"登录",a_backtop:"↑ 返回目录顶部",hl:"[划线]",an:"[批注]",del:"删除",reply:"回复",send:"发送",rph:"回复..."},
+  "zh-TW":{empty:"暫無批註",login_msg:"請先登錄後再操作",login_btn:"前往登錄",login_dismiss:"稍後再說",nav_signin:"登錄",a_backtop:"↑ 返回目錄頂部",hl:"[劃線]",an:"[批註]",del:"刪除",reply:"回覆",send:"發送",rph:"回覆..."},
+  en:{empty:"No annotations yet",login_msg:"Please sign in first",login_btn:"Sign in",login_dismiss:"Later",nav_signin:"Sign in",a_backtop:"↑ Back to top",hl:"[Highlight]",an:"[Annotation]",del:"Delete",reply:"Reply",send:"Send",rph:"Reply..."},
+  de:{empty:"Noch keine Anmerkungen",login_msg:"Bitte melden Sie sich zuerst an",login_btn:"Anmelden",login_dismiss:"Sp\u00e4ter",nav_signin:"Anmelden",a_backtop:"\u2191 Nach oben",hl:"[Markierung]",an:"[Anmerkung]",del:"L\u00f6schen",reply:"Antworten",send:"Senden",rph:"Antworten..."},
+  fr:{empty:"Aucune annotation",login_msg:"Veuillez vous connecter",login_btn:"Se connecter",login_dismiss:"Plus tard",nav_signin:"Connexion",a_backtop:"\u2191 Haut de page",hl:"[Surlignage]",an:"[Annotation]",del:"Supprimer",reply:"R\u00e9pondre",send:"Envoyer",rph:"R\u00e9pondre..."},
+  ja:{empty:"注釈はまだありません",login_msg:"先にログインしてください",login_btn:"ログイン",login_dismiss:"後で",nav_signin:"ログイン",a_backtop:"\u2191 トップに戻る",hl:"[ハイライト]",an:"[注釈]",del:"削除",reply:"返信",send:"送信",rph:"返信..."}};
   return m[sl]||m["zh-CN"];
 }
 function renderAnnoSidebar(){
@@ -579,6 +611,7 @@ renderAnnoSidebar();
 
 // Sidebar toggle (end of script)
 document.getElementById("annoToggle").onclick=function(){document.getElementById("annoSidebar").classList.toggle("open")};
+document.addEventListener("click",function(e){var sb=document.getElementById("annoSidebar");var tg=document.getElementById("annoToggle");if(sb.classList.contains("open")&&!sb.contains(e.target)&&!tg.contains(e.target)){sb.classList.remove("open")}});
 document.getElementById("closeSidebar").onclick=function(){document.getElementById("annoSidebar").classList.remove("open")};
 </script>
 </body>
