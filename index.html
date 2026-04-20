@@ -62,7 +62,12 @@ nav .dropdown-menu .dm-badge.short{background:var(--steel);color:var(--cream)}
 .avatar-upload-btn:hover{border-color:var(--terracotta);color:var(--terracotta)}
 .modal-submit{width:100%;padding:.7rem;border:none;border-radius:100px;background:var(--ink);color:var(--cream);font-family:var(--sans);font-size:.85rem;letter-spacing:.06em;cursor:pointer;transition:background .2s}
 .modal-submit:hover{background:var(--terracotta)}
-.user-dropdown{position:relative}
+.user-dropdown {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem; /* 控制头像和名字之间的间距 */
+}
 .user-dropdown .user-menu{position:absolute;top:calc(100% + .5rem);right:0;min-width:140px;background:var(--cream);border:1px solid var(--line);border-radius:6px;box-shadow:0 6px 20px color-mix(in srgb,var(--ink) 8%,transparent);opacity:0;visibility:hidden;transform:translateY(-4px);transition:opacity .2s,visibility .2s,transform .2s;overflow:hidden;z-index:101}
 .user-dropdown.open .user-menu{opacity:1;visibility:visible;transform:none}
 .user-menu button{display:block;width:100%;padding:.55rem 1rem;border:none;background:transparent;font-family:var(--sans);font-size:.8rem;text-align:left;color:var(--ink-soft);cursor:pointer;transition:background .15s,color .15s}
